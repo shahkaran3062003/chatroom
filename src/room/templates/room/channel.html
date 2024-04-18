@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -11,20 +13,25 @@
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
     {{ channelName|json_script:"channel-name" }}
+    {{ userName|json_script:"userName" }}
+
+    <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
     <script>
         const channelName = JSON.parse(document.getElementById('channel-name').textContent);
+        const userName = JSON.parse(document.getElementById('userName').textContent);
 
-        const chatSocket = new WebSocket(
+        const chatSocket = new ReconnectingWebSocket(
             'ws://'
             + window.location.host
-            + '/ws/room/'
+            + '/ws/channel/'
             + channelName
             + '/'
         );
 
         chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            console.log(data);
+            document.querySelector('#chat-log').value += (data.message.message.content + '\n');
         };
 
         chatSocket.onclose = function (e) {
@@ -42,7 +49,9 @@
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'message': message,
+                'command': 'new_message',
+                'from': userName
             }));
             messageInputDom.value = '';
         };

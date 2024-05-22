@@ -348,13 +348,26 @@
                                     </g>
                                 </svg>
                             </span>
-                            <h2 class="brand-text">Vuexy</h2>
+                            <h2 class="brand-text">Chatroom</h2>
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="shadow-bottom"></div>
             <div class="main-menu-content ">
+                <ul>
+                    <a
+                        class="d-flex align-items-center btn btn-icon"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editchannel"
+                        style="background-color: #161d31;margin: 0 15px;padding: 10px 10px 10px 10px; "
+                        href="#"
+                    >
+                        <i data-feather="plus" viewBox="0 0 24 30"></i>
+                        <span class="menu-item text-truncate" data-i18n="AddNewChannel">New Channel</span>
+                    </a>
+                </ul>
+                <hr>
                 <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                     <li class=" nav-item">
                         <a class="d-flex align-items-center" href="#">
@@ -400,67 +413,14 @@
             <div class="navbar-header">
                 <ul class="nav navbar-nav flex-row">
                     <li class="nav-item me-auto">
-                        <a class="navbar-brand" data-bs-toggle="modal" data-bs-target="#editchannel">
+                        <a
+                            class="navbar-brand btn btn-icon rounded-circle"
+                            style="background-color: #161d31;width: 48px;height: 48px"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editchannel"
+                        >
                             <span class="brand-logo">
-                                <svg
-                                    width="48"
-                                    height="48"
-                                    viewBox="0 0 48 48"
-                                    class="svg__34dd4"
-                                    overflow="visible"
-                                >
-                                    <defs>
-                                        <path d="M48 24C48 37.2548 37.2548 48 24 48C10.7452 48 0 37.2548 0 24C0 10.7452 10.7452 0 24 0C37.2548 0 48 10.7452 48 24Z" id="451a0e2d-c698-4d1b-895e-78f23dcdf52f-blob_mask"></path>
-                                    </defs>
-                                    <mask
-                                        id="451a0e2d-c698-4d1b-895e-78f23dcdf52f"
-                                        fill="black"
-                                        x="0"
-                                        y="0"
-                                        width="48"
-                                        height="48"
-                                    >
-                                        <use href="#451a0e2d-c698-4d1b-895e-78f23dcdf52f-blob_mask" fill="white" class=""></use>
-                                    </mask>
-                                    <foreignObject
-                                        x="0"
-                                        y="0"
-                                        width="48"
-                                        height="48"
-                                        mask="url(#451a0e2d-c698-4d1b-895e-78f23dcdf52f)"
-                                    >
-                                        <div
-                                            class="circleIconButton__05cf2"
-                                            aria-label="Add a Server"
-                                            role="treeitem"
-                                            data-list-item-id="guildsnav___create-join-button"
-                                            tabindex="-1"
-                                            style="
-                                            cursor: pointer;
-                                            display: flex;
-                                            align-items: center;
-                                            justify-content: center;
-                                            box-sizing: border-box;
-                                            width: 48px;
-                                            height: 48px;
-                                            transition: color .15s ease-out, background-color .15s ease-out;
-                                            background-color: #161d31 "
-                                        >
-                                            <svg
-                                                class="circleIcon_b62ef0"
-                                                aria-hidden="true"
-                                                role="img"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path fill="currentColor" d="M13 5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5Z" class=""></path>
-                                            </svg>
-                                        </div>
-                                    </foreignObject>
-                                </svg>
+                                <i data-feather="plus" style="width: 25px;height: 25px"></i>
                             </span>
                         </a>
                     </li>

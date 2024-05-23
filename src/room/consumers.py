@@ -6,12 +6,15 @@ from .models import Messages, User
 
 class ChannelConsumer(WebsocketConsumer):
 
-    def fetch_last_20_messages(self, data):
-        messages = Messages.get_last_20_messages()
+    def fetch_last_messages(self, data):
+        messages = Messages.get_last_30_messages(self)
 
         content = {
+            'command': "message",
             'messages': self.messages_to_json(messages)
         }
+
+        self.send_chat_message(content)
 
     def messages_to_json(self, messages):
         result = []
@@ -31,6 +34,8 @@ class ChannelConsumer(WebsocketConsumer):
     def new_message(self, data):
         author = data['from']
         author_user = User.objects.filter(username=author)[0]
+
+        print(author, author_user)
 
         message = Messages.objects.create(
             author=author_user,
@@ -52,7 +57,7 @@ class ChannelConsumer(WebsocketConsumer):
         )
 
     commands = {
-        'fetch_message': fetch_last_20_messages,
+        'fetch_message': fetch_last_messages,
         'new_message': new_message,
         'send_message': send_chat_message
     }

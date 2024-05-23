@@ -1,0 +1,11 @@
+{% extends 'basic.html' %}
+
+
+
+{% block chatBody %}
+{{ channelName|json_script:"channel-name" }}
+{{ userName|json_script:"userName" }}
+
+
+
+{% endblock chatBody %}

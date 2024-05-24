@@ -12,6 +12,8 @@ var sidebarToggle = $(".sidebar-toggle"),
   overlay = $(".body-content-overlay"),
   sidebarContent = $(".sidebar-content");
 
+var channelId = channelName;
+
 // Chat sidebar toggle
 function sidebarToggleFunction() {
   if (sidebarToggle.length) {
@@ -52,16 +54,27 @@ $(function () {
 
     // Admin profile left
     if (userProfileSidebar.find(".user-profile-sidebar-area").length > 0) {
-      var userScrollArea = new PerfectScrollbar(
-        userProfileSidebar.find(".user-profile-sidebar-area")[0]
-      );
+      // var userScrollArea = new PerfectScrollbar(
+      //   userProfileSidebar.find(".user-profile-sidebar-area")[0]
+      // );
+
+      for (let i = 0; i < userProfileSidebar.length; i++) {
+        new PerfectScrollbar(userProfileSidebar[i], {
+          wheelPropagation: false,
+        });
+      }
     }
 
     // Chat area
     if (userChats.length > 0) {
-      var chatsUser = new PerfectScrollbar(userChats[0], {
-        wheelPropagation: false,
-      });
+      // var temp = new PerfectScrollbar(userChats[0], {
+      //   wheelPropagation: false,
+      // });
+      for (let i = 0; i < userChats.length; i++) {
+        new PerfectScrollbar(userChats[i], {
+          wheelPropagation: false,
+        });
+      }
     }
 
     // User profile right area
@@ -153,8 +166,11 @@ $(function () {
   if (chatUsersListWrapper.find("ul li").length) {
     chatUsersListWrapper.find("ul li").on("click", function () {
       var $this = $(this),
-        startArea = $(".start-chat-area"),
-        activeChat = $(".active-chat");
+        temp = chatUsersListWrapper.find();
+      (startArea = $(".start-chat-area")),
+        (activeChat = $(".active-chat")),
+        (chId = $(this).attr("id")),
+        (activeChat = $(`.active-chat.${chId}`));
 
       if (chatUsersListWrapper.find("ul li").hasClass("active")) {
         chatUsersListWrapper.find("ul li").removeClass("active");
@@ -166,6 +182,8 @@ $(function () {
       if (chatUsersListWrapper.find("ul li").hasClass("active")) {
         startArea.addClass("d-none");
         activeChat.removeClass("d-none");
+        activeChat.addClass(channelId);
+        console.log("karanfjslkad");
       } else {
         startArea.removeClass("d-none");
         activeChat.addClass("d-none");
@@ -174,12 +192,17 @@ $(function () {
   }
 
   if (mainmenucontent.find("ul li").length) {
+    console.log("karn");
     mainmenucontent.find("ul li").on("click", function () {
       var $this = $(this),
+        temp = mainmenucontent.find("ul li"),
         startArea = $(".start-chat-area"),
-        activeChat = $(".active-chat");
+        channelId = $(this).attr("id"),
+        allActiveChat = $(".active-chat"),
+        activeChat = $(`.active-chat.${channelId}`);
 
       if (mainmenucontent.find("ul li").hasClass("active")) {
+        console.log("karn");
         mainmenucontent.find("ul li").removeClass("active");
       }
 
@@ -188,7 +211,9 @@ $(function () {
 
       if (mainmenucontent.find("ul li").hasClass("active")) {
         startArea.addClass("d-none");
+        allActiveChat.addClass("d-none");
         activeChat.removeClass("d-none");
+        activeChat.addClass(chId);
       } else {
         startArea.removeClass("d-none");
         activeChat.addClass("d-none");
@@ -337,7 +362,7 @@ function enterChat(source) {
         from: userName,
       })
     );
-    console.log("userName" + userName);
+    // console.log("userName" + userName);
     // messageInputDom.value = "";
   }
 }

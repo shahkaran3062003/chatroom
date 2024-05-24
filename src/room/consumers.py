@@ -6,8 +6,8 @@ from .models import Messages, User
 
 class ChannelConsumer(WebsocketConsumer):
 
-    def fetch_last_messages(self, data):
-        messages = Messages.get_last_30_messages(self)
+    def fetch_messages(self, data):
+        messages = Messages.get_messages(self)
 
         content = {
             'command': "message",
@@ -57,7 +57,7 @@ class ChannelConsumer(WebsocketConsumer):
         )
 
     commands = {
-        'fetch_message': fetch_last_messages,
+        'fetch_message': fetch_messages,
         'new_message': new_message,
         'send_message': send_chat_message
     }

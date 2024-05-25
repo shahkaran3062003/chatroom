@@ -337,6 +337,7 @@ body.dark-layout {
 
 .dark-layout .main-menu-content .navigation-main .nav-item .menu-content {
   background-color: #283046;
+  padding-left: 16px;
 }
 
 .dark-layout .main-menu-content .navigation-main .nav-item .menu-content .active .menu-item {

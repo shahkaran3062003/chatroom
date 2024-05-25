@@ -1,13 +1,16 @@
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import Messages, User
+from .models import Messages, User, Channel
 
 
 class ChannelConsumer(WebsocketConsumer):
 
     def fetch_messages(self, data):
-        messages = Messages.get_messages(self)
+        # messages = Messages.get_messages(self)
+        # print("Channelll name = "+self.ch_name)
+        messages = Channel.objects.filter(
+            name=self.ch_name).first().get_messages()
 
         content = {
             'command': "message",
@@ -26,7 +29,7 @@ class ChannelConsumer(WebsocketConsumer):
 
     def message_to_json(self, message):
         return {
-            'author': message.author.get_username(),
+            'author': message.user.get_username(),
             'content': str(message.content),
             'timeStamp': str(message.timeStamp)
         }
@@ -34,11 +37,11 @@ class ChannelConsumer(WebsocketConsumer):
     def new_message(self, data):
         author = data['from']
         author_user = User.objects.filter(username=author)[0]
-
-        print(author, author_user)
+        channel = Channel.objects.filter(name=self.ch_name).first()
 
         message = Messages.objects.create(
-            author=author_user,
+            channel=channel,
+            user=author_user,
             content=data['message']
         )
 

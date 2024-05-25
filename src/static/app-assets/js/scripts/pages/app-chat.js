@@ -1,12 +1,3 @@
-/*=========================================================================================
-    File Name: app-chat.js
-    Description: Chat app js
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 "use strict";
 var sidebarToggle = $(".sidebar-toggle"),
   overlay = $(".body-content-overlay"),
@@ -373,17 +364,29 @@ function addChat(data) {
 
   var chats = $(".chats");
   var lastChild = $(".chat:last-child");
-  var len = lastChild[0].classList.length;
-  if (userName == author) {
-    if (len == 2) {
+  if (lastChild.length > 0) {
+    var len = lastChild[0].classList.length;
+    if (userName == author) {
+      if (len == 2) {
+        var html2 =
+          '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+        chats.append(html2);
+      }
+    } else {
       var html2 =
-        '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+        '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
       chats.append(html2);
     }
   } else {
-    var html2 =
-      '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-    chats.append(html2);
+    if (userName == author) {
+      var html2 =
+        '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+      chats.append(html2);
+    } else {
+      var html2 =
+        '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+      chats.append(html2);
+    }
   }
   var html =
     '<div class="chat-content">' +

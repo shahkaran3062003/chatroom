@@ -1,18 +1,80 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 
-User = get_user_model()
+class Room(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    owner = models.ForeignKey(
+        User, related_name='owned_rooms', on_delete=models.CASCADE)
+    participants = models.ManyToManyField(
+        User, related_name='rooms', through='RoomParticipant')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Channel(models.Model):
+    name = models.CharField(max_length=100)
+    room = models.ForeignKey(
+        Room, related_name='channels', on_delete=models.CASCADE)
+    owner = models.ForeignKey(
+        User, related_name='owned_channels', on_delete=models.CASCADE)
+    participants = models.ManyToManyField(
+        User, related_name='channels', through='ChannelParticipant')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_messages(self):
+        return self.messages.order_by('-timeStamp')
+
+
+class RoomParticipant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'room')
+
+    def __str__(self):
+        return f"{self.room.name} - {self.user.username}"
+
+
+class ChannelParticipant(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'channel')
+
+    def __str__(self):
+        return f"{self.channel.name} - {self.user.username}"
 
 
 class Messages(models.Model):
-    author = models.ForeignKey(
-        User, related_name="author_message", on_delete=models.CASCADE)
+    channel = models.ForeignKey(
+        Channel, related_name='messages', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, related_name='messages', on_delete=models.CASCADE)
     content = models.TextField()
     timeStamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.author.get_username()
+        return f'Message by {self.user.username} in {self.channel.name}'
 
-    def get_messages(self):
-        return Messages.objects.order_by("-timeStamp").all()
+
+# class Messages(models.Model):
+#     author = models.ForeignKey(
+#         User, related_name="author_message", on_delete=models.CASCADE)
+#     content = models.TextField()
+#     timeStamp = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return self.author.get_username()
+
+#     def get_messages(self):
+#         return Messages.objects.order_by("timeStamp")

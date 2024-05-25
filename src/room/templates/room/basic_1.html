@@ -1,42 +1,45 @@
 {% load static %}
+{% load dict_key %}
 <!DOCTYPE html>
 <html class="loading dark-layout" lang="en" data-layout="dark-layout" data-textdirection="ltr">
 <!-- BEGIN: Head-->
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui" />
     <title>Chat Page</title>
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'app-assets/images/ico/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'app-assets/images/ico/favicon.ico' %}" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
-        rel="stylesheet">
+        rel="stylesheet" />
     <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/animate/animate.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/extensions/sweetalert2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/vendors.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/vendors/css/animate/animate.min.css' %}" />
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets/vendors/css/extensions/sweetalert2.min.css' %}" />
     <!-- END: Vendor CSS-->
     <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap-extended.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/colors.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/components.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/dark-layout.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/bordered-layout.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/semi-dark-layout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/bootstrap-extended.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/colors.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/components.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/dark-layout.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/bordered-layout.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/themes/semi-dark-layout.css' %}" />
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/app-chat.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/app-chat-list.css' %}">
     <link rel="stylesheet" type="text/css"
-        href="{% static 'app-assets/css/plugins/extensions/ext-component-sweet-alerts.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/plugins/forms/form-validation.css' %}">
+        href="{% static 'app-assets/css/core/menu/menu-types/vertical-menu.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/app-chat.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/pages/app-chat-list.css' %}" />
+    <link rel="stylesheet" type="text/css"
+        href="{% static 'app-assets/css/plugins/extensions/ext-component-sweet-alerts.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app-assets/css/plugins/forms/form-validation.css' %}" />
     <!-- END: Page CSS-->
 </head>
 <!-- END: Head-->
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern content-left-sidebar navbar-floating footer-static " data-open="click"
+<body class="vertical-layout vertical-menu-modern content-left-sidebar navbar-floating footer-static" data-open="click"
     data-menu="vertical-menu-modern" data-col="content-left-sidebar">
     <!-- BEGIN: Header-->
     <nav
@@ -57,7 +60,7 @@
                                 <i data-feather="search"></i>
                             </div>
                             <input class="form-control input" type="text" placeholder="Bookmark" tabindex="0"
-                                data-search="search">
+                                data-search="search" />
                             <ul class="search-list search-list-bookmark"></ul>
                         </div>
                     </li>
@@ -73,39 +76,34 @@
                             <i data-feather="search"></i>
                         </div>
                         <input class="form-control input" type="text" placeholder="Search" tabindex="-1"
-                            data-search="search">
+                            data-search="search" />
                         <div class="search-input-close">
                             <i data-feather="x"></i>
                         </div>
                         <ul class="search-list search-list-main"></ul>
                     </div>
                 </li>
-                <li class="nav-item  me-25">
-                    <a class="nav-link  user-profile-toggle" href="#">
+                <li class="nav-item me-25">
+                    <a class="nav-link user-profile-toggle" href="#">
                         <i class="ficon" data-feather="users"></i>
                         <span class="badge rounded-pill bg-primary badge-up cart-item-count">6</span>
                     </a>
                 </li>
 
-
                 <li class="nav-item dropdown dropdown-user">
-
-
                     {% block userInfo %}
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
-                            <span class="user-name fw-bolder">John Doe</span>
+                            <span class="user-name fw-bolder"> {{ user.username }} </span>
                         </div>
                         <span class="avatar">
                             <img class="round" src="{% static 'app-assets/images/portrait/small/avatar-s-11.jpg' %}"
-                                alt="avatar" height="40" width="40">
+                                alt="avatar" height="40" width="40" />
                             <span class="avatar-status-online"></span>
                         </span>
                     </a>
                     {% endblock %}
-
-
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         <a class="dropdown-item" href="#">
@@ -119,15 +117,12 @@
                         </a>
                     </div>
                 </li>
-
-
-
             </ul>
         </div>
     </nav>
     <!-- END: Header-->
     <!-- BEGIN: Main Menu-->
-    <div class="main-menu1 menu-fixed menu-dark menu-accordion menu-shadow " style="background-color: #283046;"
+    <div class="main-menu1 menu-fixed menu-dark menu-accordion menu-shadow" style="background-color: #283046"
         data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
@@ -153,7 +148,7 @@
                                         <g id="Group" transform="translate(400.000000, 178.000000)">
                                             <path class="text-primary" id="Path"
                                                 d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z"
-                                                style="fill:currentColor"></path>
+                                                style="fill: currentColor"></path>
                                             <path id="Path1"
                                                 d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z"
                                                 fill="url(#linearGradient-1)" opacity="0.2"></path>
@@ -178,19 +173,58 @@
         </div>
         <div class="shadow-bottom"></div>
 
-        <div class="main-menu-content ">
+        <div class="main-menu-content">
+            {% if channel.owner == user %}
             <ul>
                 <a class="d-flex align-items-center btn btn-icon" data-bs-toggle="modal" data-bs-target="#addchannel"
-                    style="background-color: #161d31;margin: 0 15px;padding: 10px 10px 10px 10px; " href="#">
+                    style="
+              background-color: #161d31;
+              margin: 0 15px;
+              padding: 10px 10px 10px 10px;
+            " href="#">
                     <i data-feather="plus" viewBox="0 0 24 30"></i>
                     <span class="menu-item text-truncate" data-i18n="AddNewChannel">New Channel</span>
                 </a>
             </ul>
-            <hr>
+            {% endif %}
+            <hr />
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                {% block channels %}
+                {% block channels %} {% for channel in channels %}
 
-                <li class="nav-item" id="{{channelName}}">
+                <li class="nav-item" id="{{ channel.name }}">
+                    <a class="d-flex align-items-center" href="localhost:8000/channel/{{channelName}}">
+                        <svg class="icon__67ab4" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg"
+                            width="20" height="24" fill="none" viewBox="0 0 24 24">
+                            <path fill="currentColor" fill-rule="evenodd"
+                                d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
+                                clip-rule="evenodd" class=""></path>
+                        </svg>
+                        <span class="menu-title text-truncate" data-i18n="Common Channel">
+                            {{ channel.name }}
+                        </span>
+                    </a>
+
+                    {% if channel.owner == user %}
+                    <ul class="menu-content">
+                        <li>
+                            <a class="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#editchannel">
+                                <i data-feather="edit" viewBox="0 0 24 30"></i>
+                                <span class="menu-item text-truncate" data-i18n="Edit">Edit</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" id="confirm-color">
+                                <i data-feather="trash-2" viewBox="0 0 24 30"></i>
+                                <span class="menu-item text-truncate" data-i18n="Delete">Delete</span>
+                            </a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </li>
+
+                {% endfor %}
+
+                <!-- <li class="nav-item" id="{{channelName}}">
                     <a class="d-flex align-items-center" href="localhost:8000/channel/{{channelName}}">
                         <svg class="icon__67ab4" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg"
                             width="20" height="24" fill="none" viewBox="0 0 24 24">
@@ -199,35 +233,7 @@
                                 clip-rule="evenodd" class=""></path>
                         </svg>
                         <span class="menu-title text-truncate" data-i18n="Common Channel"> {{ channelName }}
-                            <!-- Common Channel  -->
-                        </span>
-                    </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a class="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#editchannel">
-                                <i data-feather="edit" viewBox="0 0 24 30"></i>
-                                <span class="menu-item text-truncate" data-i18n="Edit">Edit</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex align-items-center" id="confirm-color">
-                                <i data-feather="trash-2" viewBox="0 0 24 30"></i>
-                                <span class="menu-item text-truncate" data-i18n="Delete">Delete</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                <li class="nav-item" id="common">
-                    <a class="d-flex align-items-center" href="http://localhost:8000/channel/common/">
-                        <svg class="icon__67ab4" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="24" fill="none" viewBox="0 0 24 24">
-                            <path fill="currentColor" fill-rule="evenodd"
-                                d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                clip-rule="evenodd" class=""></path>
-                        </svg>
-                        <span class="menu-title text-truncate" data-i18n="Common Channel"> Common
-                            <!-- Common Channel  -->
                         </span>
                     </a>
                     <ul class="menu-content">
@@ -244,14 +250,11 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
+
                 {% endblock %}
             </ul>
-
-
-
         </div>
-
     </div>
 
     <!-- </div> -->
@@ -261,27 +264,25 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item me-auto">
                     <a class="navbar-brand btn btn-icon rounded-circle"
-                        style="background-color: #161d31;width: 48px;height: 48px" data-bs-toggle="modal"
+                        style="background-color: #161d31; width: 48px; height: 48px" data-bs-toggle="modal"
                         data-bs-target="#addroom">
                         <span class="brand-logo">
-                            <i data-feather="plus" style="width: 25px;height: 25px"></i>
+                            <i data-feather="plus" style="width: 25px; height: 25px"></i>
                         </span>
                     </a>
                 </li>
-                {% block rooms %}
-
+                {% block rooms %} {% for room in allRooms %}
                 <li class="nav-item me-auto">
                     <a class="navbar-brand btn btn-icon rounded-circle"
-                        style="background-color: #161d31;width: 48px;height: 48px" data-bs-toggle="modal"
+                        style="background-color: #161d31; width: 48px; height: 48px" data-bs-toggle="modal"
                         data-bs-target="">
-                        <span class="brand-logo align-items-center" style="font-size: large;">
+                        <span class="brand-logo align-items-center" style="font-size: large">
                             <!-- <i data-feather=" plus" style="width: 25px;height: 25px"></i> -->
+                            {{ room.name }}
                         </span>
                     </a>
                 </li>
-
-                {% endblock %}
-
+                {% endfor %} {% endblock %}
             </ul>
         </div>
     </div>
@@ -298,41 +299,47 @@
                         <div class="body-content-overlay"></div>
                         <section class="chat-app-window">
                             <!-- To load Conversation -->
-                            <div class="start-chat-area">
+                            <!-- <div class="start-chat-area">
                                 <div class="mb-1 start-chat-icon">
                                     <i data-feather="message-square" href="#"></i>
                                 </div>
-                                <h4 class="sidebar-toggle start-chat-text">Start Conversation</h4>
-                            </div>
+                                <h4 class="sidebar-toggle start-chat-text">
+                                    Start Conversation
+                                </h4>
+                            </div> -->
                             <!-- / To load Conversation -->
                             <!-- Main chat area -->
                             <!-- Active Chat -->
 
+                            {% for channel in channels %}
 
-                            {% block activeChannel %}
+
+                            {% if channel == selectedChannel %}
+                            <div class="active-chat {{ channel.name }}">
+
+                                {% else %}
+                                <div class="active-chat d-none {{ channel.name }}">
+                                    {% endif %}
 
 
-                            {% endblock %}
+                                    <!-- <div class="active-chat active"> -->
 
-                            <div class="active-chat d-none {{channelName}}">
-                                <!-- <div class="active-chat active"> -->
-
-                                <!-- Chat Header -->
-                                <div class="chat-navbar">
-                                    <header class="chat-header">
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-border  m-0 me-1">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
+                                    <!-- Chat Header -->
+                                    <div class="chat-navbar">
+                                        <header class="chat-header">
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-border m-0 me-1">
+                                                    <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
+                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        fill="none" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" fill-rule="evenodd"
+                                                            d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
+                                                            clip-rule="evenodd" class=""></path>
+                                                    </svg>
+                                                </div>
+                                                <h6 class="mb-0">{{ channel.name }}</h6>
                                             </div>
-                                            <h6 class="mb-0"> {{ channelName }} </h6>
-                                        </div>
-                                        <!-- <div class="d-flex align-items-center">
+                                            <!-- <div class="d-flex align-items-center">
                                             <div class="dropdown">
                                                 <button
                                                     class="btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle"
@@ -348,859 +355,112 @@
                                                 </div>
                                             </div>
                                         </div> -->
-                                    </header>
-                                </div>
-                                <!--/ Chat Header -->
-                                <!-- User Chat messages -->
-                                <div class="user-chats ps {{channelName}}">
-                                    <div class="chats">
-                                        {% block chatBody %}
-                                        {{ channelName|json_script:"channel-name" }}
-                                        {{ userName|json_script:"userName" }}
-
-
-
-                                        <!-- <div class="chat">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>How can we help? We're here for you! 😄</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Hey John, I am looking for the best admin template.</p>
-                                                    <p>Could you please help me to find it out? 🤔</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>It should be Bootstrap 4 compatible.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="divider">
-                                            <div class="divider-text">Yesterday</div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Absolutely!</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Looks clean and fresh UI. 😃</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>It's perfect for my next project.</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>How can I purchase it?</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Thanks, from ThemeForest.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>I will purchase it for sure. 👍</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>Thanks.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Great, Feel free to get in touch on</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>https://pixinvent.ticksy.com/</p>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        {% endblock %}
+                                        </header>
                                     </div>
-                                </div>
-                                <!-- User Chat messages -->
-                                <!-- Submit Chat form -->
-                                <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
-                                    <div class="input-group input-group-merge me-1 form-send-message">
-                                        <input type="text" class="form-control message"
-                                            placeholder="Type your message ">
+                                    <!--/ Chat Header -->
+                                    <!-- User Chat messages -->
+                                    <div class="user-chats ps {{ channel.name }}">
+                                        <div class="chats">
+
+                                            {{ selectedChannel.name|json_script:"channel-name" }}
+                                            {{ user.username|json_script:"userName" }}
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary send" onclick="enterChat();">
-                                        <i data-feather="send" class="d-lg-none"></i>
-                                        <span class="d-none d-lg-block">Send</span>
-                                    </button>
-                                </form>
-                                <div class="user-profile-sidebar {{channelName}}">
-                                    <header class="user-profile-header">
-                                        <span class="close-icon">
-                                            <i data-feather="x"></i>
-                                        </span>
-                                        <!-- User Profile image with name -->
-                                        <div class="header-profile-sidebar">
-                                            <div class="chat-fixed-search">
-                                                <div class="d-flex align-items-center w-100">
-                                                    <div class="input-group input-group-merge ms-1 w-100">
-                                                        <span class="input-group-text round">
-                                                            <i data-feather="search" class="text-muted"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control round" id="chat-search"
-                                                            placeholder="Search" aria-label="Search..."
-                                                            aria-describedby="chat-search">
+                                    <!-- User Chat messages -->
+                                    <!-- Submit Chat form -->
+                                    <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
+                                        <div class="input-group input-group-merge me-1 form-send-message">
+                                            <input type="text" class="form-control message"
+                                                placeholder="Type your message " />
+                                        </div>
+                                        <button type="button" class="btn btn-primary send" onclick="enterChat();">
+                                            <i data-feather="send" class="d-lg-none"></i>
+                                            <span class="d-none d-lg-block">Send</span>
+                                        </button>
+                                    </form>
+                                    <div class="user-profile-sidebar {{channelName}}">
+                                        <header class="user-profile-header">
+                                            <span class="close-icon">
+                                                <i data-feather="x"></i>
+                                            </span>
+                                            <!-- User Profile image with name -->
+                                            <div class="header-profile-sidebar">
+                                                <div class="chat-fixed-search">
+                                                    <div class="d-flex align-items-center w-100">
+                                                        <div class="input-group input-group-merge ms-1 w-100">
+                                                            <span class="input-group-text round">
+                                                                <i data-feather="search" class="text-muted"></i>
+                                                            </span>
+                                                            <input type="text" class="form-control round"
+                                                                id="chat-search" placeholder="Search"
+                                                                aria-label="Search..." aria-describedby="chat-search" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- / User Profile image with name -->
-                                    </header>
-                                    <div class="user-profile-sidebar-area">
-                                        <div class="sidebar-left">
-                                            <div class="sidebar">
-                                                <!-- Chat Sidebar area -->
-                                                <div class="sidebar-content">
-                                                    <span class="sidebar-close-icon">
-                                                        <i data-feather="x"></i>
-                                                    </span>
-                                                    <!-- Sidebar Users start -->
-                                                    <div id="users-list" class="chat-user-list-wrapper list-group">
-                                                        <!-- <h4 class="chat-list-title">Chats</h4>
-                                                        <ul class="chat-users-list chat-list media-list">
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-3.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                    <span class="avatar-status-offline"></span>
-                                                                </span>
-                                                                <div class="chat-info flex-grow-1">
-                                                                    <h5 class="mb-0">Elizabeth Elliott</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Cake pie jelly jelly beans. Marzipan lemon drops
-                                                                        halvah
-                                                                        cake. Pudding cookie lemon drops icing
-                                                                    </p>
-                                                                </div>
-                                                                <div class="chat-meta text-nowrap">
-                                                                    <small class="float-end mb-25 chat-time">4:14 PM</small>
-                                                                    <span
-                                                                        class="badge bg-danger rounded-pill float-end">3</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                    <span class="avatar-status-busy"></span>
-                                                                </span>
-                                                                <div class="chat-info flex-grow-1">
-                                                                    <h5 class="mb-0">Kristopher Candy</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Cake pie jelly jelly beans. Marzipan lemon drops
-                                                                        halvah
-                                                                        cake. Pudding cookie lemon drops icing
-                                                                    </p>
-                                                                </div>
-                                                                <div class="chat-meta text-nowrap">
-                                                                    <small class="float-end mb-25 chat-time">9:09 AM</small>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-8.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                    <span class="avatar-status-away"></span>
-                                                                </span>
-                                                                <div class="chat-info flex-grow-1">
-                                                                    <h5 class="mb-0">Sarah Woods</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Cake pie jelly jelly beans. Marzipan lemon drops
-                                                                        halvah
-                                                                        cake. Pudding cookie lemon drops icing.
-                                                                    </p>
-                                                                </div>
-                                                                <div class="chat-meta text-nowrap">
-                                                                    <small class="float-end mb-25 chat-time">5:48 PM</small>
-                                                                </div>
-                                                            </li>
-                                                            <li class="no-results">
-                                                                <h6 class="mb-0">No Chats Found</h6>
-                                                            </li>
-                                                        </ul> -->
-                                                        <h4 class="chat-list-title">Members</h4>
-                                                        <ul class="chat-users-list contact-list media-list">
+                                            <!-- / User Profile image with name -->
+                                        </header>
+                                        <div class="user-profile-sidebar-area">
+                                            <div class="sidebar-left">
+                                                <div class="sidebar">
+                                                    <!-- Chat Sidebar area -->
+                                                    <div class="sidebar-content">
+                                                        <span class="sidebar-close-icon">
+                                                            <i data-feather="x"></i>
+                                                        </span>
+                                                        <!-- Sidebar Users start -->
+                                                        <div id="users-list" class="chat-user-list-wrapper list-group">
+                                                            <h4 class="chat-list-title">Members</h4>
+                                                            <ul class="chat-users-list contact-list media-list">
 
+                                                                {% with channel as ch %}
 
+                                                                {% for Pchannel, participant in participants.items %}
 
+                                                                {% if Pchannel == ch %}
+                                                                {% with participant as ps %}
+                                                                {% for p in ps %}
 
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
+                                                                
+                                                                {% if p.user != user %}
+                                                                    
+                                                                
+                                                                    
+                                                                <li>
+                                                                    <span class="avatar">
+                                                                        <!-- <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
                                                                         height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Jenny Perich</h5>
-                                                                    <p class="card-text text-truncate">
+                                                                    </span>
+                                                                    <div class="chat-info">
+                                                                        <h5 class="mb-0">
+                                                                            {{ p.user.username }}
+                                                                        </h5>
+                                                                        <!-- <p class="card-text text-truncate">
                                                                         Tart dragée carrot cake chocolate bar. Chocolate
                                                                         cake
                                                                         jelly beans caramels tootsie roll candy canes.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-5.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Sarah Montgomery</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Tootsie roll sesame snaps biscuit icing jelly-o
-                                                                        biscuit
-                                                                        chupa chups powder.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-9.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Heather Howell</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Tart cookie dragée sesame snaps halvah.
-                                                                        Fruitcake
-                                                                        sugar
-                                                                        plum gummies cheesecake toffee.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Kelly Reyes</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Wafer toffee tart jelly cake croissant chocolate
-                                                                        bar
-                                                                        cupcake donut. Fruitcake gingerbread tiramisu
-                                                                        sweet
-                                                                        jelly-o.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-15.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Kristopher Candy</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Marzipan bonbon chocolate bar biscuit lemon
-                                                                        drops
-                                                                        muffin
-                                                                        jelly-o sweet jujubes.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-14.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Vincent Nelson</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Toffee gummi bears sugar plum gummi bears
-                                                                        chocolate
-                                                                        bar
-                                                                        donut. Pudding cookie lemon drops icing
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-17.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Jimmy Parker</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Powder halvah jelly beans topping caramels
-                                                                        muffin
-                                                                        dragée
-                                                                        lollipop oat cake.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-3.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Elizabeth Elliott</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Candy canes ice cream jelly beans carrot cake
-                                                                        chocolate
-                                                                        bar pastry candy jelly-o.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-13.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <!-- <div class="chat-info">
-                                                                    <h5 class="mb-0">Nelson D'souza</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Macaroon candy canes apple pie soufflé lemon
-                                                                        drops
-                                                                        chocolate cake chocolate sweet roll.
-                                                                    </p>
-                                                                </div> -->
-                                                            </li>
-                                                            <!-- <li class="no-results">
-                                                                <h6 class="mb-0">No Contacts Found</h6>
-                                                            </li> -->
-                                                        </ul>
+                                                                    </p> -->
+                                                                    </div>
+                                                                </li>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                                {% endwith %}
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                                {% endwith %}
+                                                            </ul>
+                                                        </div>
+                                                        <!-- Sidebar Users end -->
                                                     </div>
-                                                    <!-- Sidebar Users end -->
+                                                    <!--/ Chat Sidebar area -->
                                                 </div>
-                                                <!--/ Chat Sidebar area -->
                                             </div>
                                         </div>
                                     </div>
+                                    <!--/ Submit Chat form -->
                                 </div>
-                                <!--/ Submit Chat form -->
-                            </div>
 
-
-                            <div class="active-chat d-none common active">
-                                <!-- <div class="active-chat active"> -->
-
-                                <!-- Chat Header -->
-                                <div class="chat-navbar">
-                                    <header class="chat-header">
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar-border  m-0 me-1">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <h6 class="mb-0"> Common </h6>
-                                        </div>
-                                        <!-- <div class="d-flex align-items-center">
-                                            <div class="dropdown">
-                                                <button
-                                                    class="btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle"
-                                                    type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i data-feather="more-vertical" id="chat-header-actions"
-                                                        class="font-medium-2"></i>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="chat-header-actions">
-                                                    <a class="dropdown-item" href="#">Mute Notifications</a>
-                                                    <a class="dropdown-item" href="#">Clear Chat</a>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                    </header>
-                                </div>
-                                <!--/ Chat Header -->
-                                <!-- User Chat messages -->
-                                <div class="user-chats ps Common">
-                                    <div class="chats">
-
-                                        {{ channelName|json_script:"channel-name" }}
-                                        {{ userName|json_script:"userName" }}
-
-
-
-                                        <!-- <div class="chat">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>How can we help? We're here for you! 😄</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Hey John, I am looking for the best admin template.</p>
-                                                    <p>Could you please help me to find it out? 🤔</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>It should be Bootstrap 4 compatible.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="divider">
-                                            <div class="divider-text">Yesterday</div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Absolutely!</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>Vuexy admin is the responsive bootstrap 4 admin template.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Looks clean and fresh UI. 😃</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>It's perfect for my next project.</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>How can I purchase it?</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Thanks, from ThemeForest.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>I will purchase it for sure. 👍</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>Thanks.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat chat-left">
-                                            <div class="chat-avatar">
-                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                    xmlns="http://www.w3.org/2000/svg" width="36" height="36  "
-                                                    fill="none" viewBox="0 0 24 24">
-                                                    <path fill="currentColor" fill-rule="evenodd"
-                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                        clip-rule="evenodd" class=""></path>
-                                                </svg>
-                                            </div>
-                                            <div class="chat-body">
-                                                <div class="chat-content">
-                                                    <p>Great, Feel free to get in touch on</p>
-                                                </div>
-                                                <div class="chat-content">
-                                                    <p>https://pixinvent.ticksy.com/</p>
-                                                </div>
-                                            </div>
-                                        </div> -->
-
-                                    </div>
-                                </div>
-                                <!-- User Chat messages -->
-                                <!-- Submit Chat form -->
-                                <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
-                                    <div class="input-group input-group-merge me-1 form-send-message">
-                                        <input type="text" class="form-control message"
-                                            placeholder="Type your message ">
-                                    </div>
-                                    <button type="button" class="btn btn-primary send" onclick="enterChat();">
-                                        <i data-feather="send" class="d-lg-none"></i>
-                                        <span class="d-none d-lg-block">Send</span>
-                                    </button>
-                                </form>
-                                <!--/ Submit Chat form -->
-
-                                <div class="user-profile-sidebar {{channelName}}">
-                                    <header class="user-profile-header">
-                                        <span class="close-icon">
-                                            <i data-feather="x"></i>
-                                        </span>
-                                        <!-- User Profile image with name -->
-                                        <div class="header-profile-sidebar">
-                                            <div class="chat-fixed-search">
-                                                <div class="d-flex align-items-center w-100">
-                                                    <div class="input-group input-group-merge ms-1 w-100">
-                                                        <span class="input-group-text round">
-                                                            <i data-feather="search" class="text-muted"></i>
-                                                        </span>
-                                                        <input type="text" class="form-control round" id="chat-search"
-                                                            placeholder="Search" aria-label="Search..."
-                                                            aria-describedby="chat-search">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- / User Profile image with name -->
-                                    </header>
-                                    <div class="user-profile-sidebar-area">
-                                        <div class="sidebar-left">
-                                            <div class="sidebar">
-                                                <!-- Chat Sidebar area -->
-                                                <div class="sidebar-content">
-                                                    <span class="sidebar-close-icon">
-                                                        <i data-feather="x"></i>
-                                                    </span>
-                                                    <!-- Sidebar Users start -->
-                                                    <div id="users-list" class="chat-user-list-wrapper list-group">
-                                                        <!-- <h4 class="chat-list-title">Chats</h4>
-                                                        <ul class="chat-users-list chat-list media-list">
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-3.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                    <span class="avatar-status-offline"></span>
-                                                                </span>
-                                                                <div class="chat-info flex-grow-1">
-                                                                    <h5 class="mb-0">Elizabeth Elliott</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Cake pie jelly jelly beans. Marzipan lemon drops
-                                                                        halvah
-                                                                        cake. Pudding cookie lemon drops icing
-                                                                    </p>
-                                                                </div>
-                                                                <div class="chat-meta text-nowrap">
-                                                                    <small class="float-end mb-25 chat-time">4:14 PM</small>
-                                                                    <span
-                                                                        class="badge bg-danger rounded-pill float-end">3</span>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                    <span class="avatar-status-busy"></span>
-                                                                </span>
-                                                                <div class="chat-info flex-grow-1">
-                                                                    <h5 class="mb-0">Kristopher Candy</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Cake pie jelly jelly beans. Marzipan lemon drops
-                                                                        halvah
-                                                                        cake. Pudding cookie lemon drops icing
-                                                                    </p>
-                                                                </div>
-                                                                <div class="chat-meta text-nowrap">
-                                                                    <small class="float-end mb-25 chat-time">9:09 AM</small>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-8.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                    <span class="avatar-status-away"></span>
-                                                                </span>
-                                                                <div class="chat-info flex-grow-1">
-                                                                    <h5 class="mb-0">Sarah Woods</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Cake pie jelly jelly beans. Marzipan lemon drops
-                                                                        halvah
-                                                                        cake. Pudding cookie lemon drops icing.
-                                                                    </p>
-                                                                </div>
-                                                                <div class="chat-meta text-nowrap">
-                                                                    <small class="float-end mb-25 chat-time">5:48 PM</small>
-                                                                </div>
-                                                            </li>
-                                                            <li class="no-results">
-                                                                <h6 class="mb-0">No Chats Found</h6>
-                                                            </li>
-                                                        </ul> -->
-                                                        <h4 class="chat-list-title">Members</h4>
-                                                        <ul class="chat-users-list contact-list media-list">
-
-
-
-
-                                                            <!-- <li>
-                                                                <span class="avatar">
-                                                                    <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image">
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Jenny Perich</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Tart dragée carrot cake chocolate bar. Chocolate
-                                                                        cake
-                                                                        jelly beans caramels tootsie roll candy canes.
-                                                                    </p>
-                                                                </div>
-                                                            </li> -->
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-5.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Sarah Montgomery</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Tootsie roll sesame snaps biscuit icing jelly-o
-                                                                        biscuit
-                                                                        chupa chups powder.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-9.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Heather Howell</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Tart cookie dragée sesame snaps halvah.
-                                                                        Fruitcake
-                                                                        sugar
-                                                                        plum gummies cheesecake toffee.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Kelly Reyes</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Wafer toffee tart jelly cake croissant chocolate
-                                                                        bar
-                                                                        cupcake donut. Fruitcake gingerbread tiramisu
-                                                                        sweet
-                                                                        jelly-o.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-15.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Kristopher Candy</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Marzipan bonbon chocolate bar biscuit lemon
-                                                                        drops
-                                                                        muffin
-                                                                        jelly-o sweet jujubes.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-14.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Vincent Nelson</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Toffee gummi bears sugar plum gummi bears
-                                                                        chocolate
-                                                                        bar
-                                                                        donut. Pudding cookie lemon drops icing
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-17.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Jimmy Parker</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Powder halvah jelly beans topping caramels
-                                                                        muffin
-                                                                        dragée
-                                                                        lollipop oat cake.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-3.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Elizabeth Elliott</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Candy canes ice cream jelly beans carrot cake
-                                                                        chocolate
-                                                                        bar pastry candy jelly-o.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <span class="avatar">
-                                                                    <!-- <img src="app-assets/images/portrait/small/avatar-s-13.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
-                                                                </span>
-                                                                <div class="chat-info">
-                                                                    <h5 class="mb-0">Nelson D'souza</h5>
-                                                                    <p class="card-text text-truncate">
-                                                                        Macaroon candy canes apple pie soufflé lemon
-                                                                        drops
-                                                                        chocolate cake chocolate sweet roll.
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <!-- <li class="no-results">
-                                                                <h6 class="mb-0">No Contacts Found</h6>
-                                                            </li> -->
-                                                        </ul>
-                                                    </div>
-                                                    <!-- Sidebar Users end -->
-                                                </div>
-                                                <!--/ Chat Sidebar area -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                {% endfor %}
 
                         </section>
 
@@ -1210,9 +470,6 @@
                         <!--/ User Chat profile right area -->
                     </div>
                 </div>
-
-
-
 
                 <!-- Edit User Modal -->
                 <div class="modal fade" id="addchannel" tabindex="-1" aria-hidden="true">
@@ -1230,10 +487,12 @@
                                     <div class="col-12">
                                         <label class="form-label" for="modalEditChannelName">Channel Name</label>
                                         <input type="text" id="modalEditChannelName" name="channelname"
-                                            class="form-control" placeholder="Common, Game, Study">
+                                            class="form-control" placeholder="Common, Game, Study" />
                                     </div>
                                     <div class="col-12 text-center mt-2 pt-50">
-                                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                        <button type="submit" class="btn btn-primary me-1">
+                                            Submit
+                                        </button>
                                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                                             aria-label="Close">
                                             Discard
@@ -1260,10 +519,12 @@
                                     <div class="col-12">
                                         <label class="form-label" for="modalEditChannelName">Channel Name</label>
                                         <input type="text" id="modalEditChannelName" name="channelname"
-                                            class="form-control" placeholder="Common, Game, Study">
+                                            class="form-control" placeholder="Common, Game, Study" />
                                     </div>
                                     <div class="col-12 text-center mt-2 pt-50">
-                                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                        <button type="submit" class="btn btn-primary me-1">
+                                            Submit
+                                        </button>
                                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                                             aria-label="Close">
                                             Discard
@@ -1290,10 +551,12 @@
                                     <div class="col-12">
                                         <label class="form-label" for="modalEditChannelName">Room Name</label>
                                         <input type="text" id="modalEditChannelName" name="roomname"
-                                            class="form-control" placeholder="School, College, Party">
+                                            class="form-control" placeholder="School, College, Party" />
                                     </div>
                                     <div class="col-12 text-center mt-2 pt-50">
-                                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                        <button type="submit" class="btn btn-primary me-1">
+                                            Submit
+                                        </button>
                                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                                             aria-label="Close">
                                             Discard
@@ -1320,10 +583,12 @@
                                     <div class="col-12">
                                         <label class="form-label" for="modalEditChannelName">Room Name</label>
                                         <input type="text" id="modalEditChannelName" name="roomname"
-                                            class="form-control" placeholder="School, College, Party">
+                                            class="form-control" placeholder="School, College, Party" />
                                     </div>
                                     <div class="col-12 text-center mt-2 pt-50">
-                                        <button type="submit" class="btn btn-primary me-1">Submit</button>
+                                        <button type="submit" class="btn btn-primary me-1">
+                                            Submit
+                                        </button>
                                         <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
                                             aria-label="Close">
                                             Discard
@@ -1343,10 +608,12 @@
     <div class="drag-target"></div>
     <!-- BEGIN: Vendor JS-->
     <script>
-
-        const channelName = JSON.parse(document.getElementById('channel-name').textContent);
-        const userName = JSON.parse(document.getElementById('userName').textContent);
-
+        const channelName = JSON.parse(
+            document.getElementById("channel-name").textContent
+        );
+        const userName = JSON.parse(
+            document.getElementById("userName").textContent
+        );
     </script>
 
     <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>
@@ -1367,56 +634,45 @@
     <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
     <!-- END: Page JS-->
     <script>
-        $(window).on('load', function () {
+        $(window).on("load", function () {
             if (feather) {
                 feather.replace({
                     width: 14,
-                    height: 14
+                    height: 14,
                 });
             }
         });
 
-
         const chatSocket = new ReconnectingWebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/channel/'
-            + channelName
-            + '/'
+            "ws://" + window.location.host + "/ws/channel/" + channelName + "/"
         );
 
         chatSocket.onopen = function (e) {
             fetchMessage();
-        }
-
-
+        };
 
         chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
-            const message = data['message'];
-            const command = message['command'];
-
+            const message = data["message"];
+            const command = message["command"];
 
             if (command === "message") {
-                for (let i = message['messages'].length - 1; i >= 0; i--) {
-                    createMessage(message['messages'][i]);
+                for (let i = message["messages"].length - 1; i >= 0; i--) {
+                    createMessage(message["messages"][i]);
                 }
             } else if (command === "new_message") {
-
                 addChat(data, userName);
             }
-
         };
 
         function fetchMessage() {
-            chatSocket.send(JSON.stringify({ 'command': 'fetch_message' }));
+            chatSocket.send(JSON.stringify({ command: "fetch_message" }));
         }
 
         function createMessage(data) {
-            var author = data['author'];
+            var author = data["author"];
             var chats = $(".chats");
             var lastChild = $(".chat:last-child");
-
 
             if (lastChild.length != 0) {
                 var len = lastChild[0].classList.length;
@@ -1453,14 +709,14 @@
 
             $(".chat:last-child .chat-body").append(html);
             $(".message").val("");
-            $(`.user-chats.${channelId}`).scrollTop($(".user-chats > .chats").height());
+            $(`.user-chats.${channelId}`).scrollTop(
+                $(".user-chats > .chats").height()
+            );
         }
 
         chatSocket.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
+            console.error("Chat socket closed unexpectedly");
         };
-
-
     </script>
 </body>
 <!-- END: Body-->

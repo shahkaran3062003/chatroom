@@ -424,6 +424,17 @@
                             </span>
                         </a>
                     </li>
+                    <li class="nav-item me-auto">
+                        <a
+                            class="navbar-brand btn btn-icon rounded-circle"
+                            style="background-color: #161d31;width: 48px;height: 48px"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            data-bs-original-title="Server Name 1"
+                        >
+                            <span class="brand-logo"></span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -475,7 +486,10 @@
                                                         ></path>
                                                     </svg>
                                                 </div>
-                                                <h6 class="mb-0">Channel</h6>
+                                                <div class="chat-info flex-grow-1">
+                                                    <h5 class="mb-0">Channel 1</h5>
+                                                    <span class="timeline-event-time">12 min ago</span>
+                                                </div>
                                             </div>
                                             <div class="d-flex align-items-center">
                                                 <div class="dropdown">
@@ -524,7 +538,7 @@
                                                     </svg>
                                                 </div>
                                                 <div class="chat-body">
-                                                    <div class="chat-content">
+                                                    <div class="chat-content" data-message-id="1">
                                                         <p>How can we help? We're here for you! 😄</p>
                                                     </div>
                                                 </div>
@@ -1081,6 +1095,7 @@
         <script src="app-assets/js/scripts/components/components-dropdowns.js"></script>
         <script src="app-assets/js/scripts/extensions/ext-component-sweet-alerts.js"></script>
         <script src="app-assets/js/scripts/pages/modal-edit-channel.js"></script>
+        <script src="app-assets/js/scripts/components/components-tooltips.js"></script>
         <!-- END: Page JS-->
         <script>
         $(window).on('load', function() {

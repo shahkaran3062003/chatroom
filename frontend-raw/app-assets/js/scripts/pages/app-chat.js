@@ -1,11 +1,3 @@
-/*=========================================================================================
-    File Name: app-chat.js
-    Description: Chat app js
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 
 'use strict';
 var sidebarToggle = $('.sidebar-toggle'),
@@ -257,34 +249,6 @@ $(function () {
     });
   }
 
-  if (speechToText.length) {
-    // Speech To Text
-    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-    if (SpeechRecognition !== undefined && SpeechRecognition !== null) {
-      var recognition = new SpeechRecognition(),
-        listening = false;
-      speechToText.on('click', function () {
-        var $this = $(this);
-        recognition.onspeechstart = function () {
-          listening = true;
-        };
-        if (listening === false) {
-          recognition.start();
-        }
-        recognition.onerror = function (event) {
-          listening = false;
-        };
-        recognition.onresult = function (event) {
-          $this.closest('.form-send-message').find('.message').val(event.results[0][0].transcript);
-        };
-        recognition.onspeechend = function (event) {
-          listening = false;
-          recognition.stop();
-        };
-      });
-    }
-  }
-});
 // Window Resize
 $(window).on('resize', function () {
   sidebarToggleFunction();
@@ -317,3 +281,119 @@ function enterChat(source) {
     $('.user-chats').scrollTop($('.user-chats > .chats').height());
   }
 }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  let longPressTimer;
+  const longPressDuration = 1000; 
+
+  function removeChatItem(chatItem) {
+      chatItem.remove();
+  }
+
+  function handleLongPressForRemoval(event) {
+      const chatItem = event.currentTarget;
+
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-danger ms-1'
+          },
+          buttonsStyling: false
+      }).then((result) => {
+          if (result.isConfirmed) {
+              removeChatItem(chatItem);
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Deleted!',
+                  text: 'The chat has been removed.',
+                  customClass: {
+                      confirmButton: 'btn btn-success'
+                  }
+              });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire({
+                  title: 'Cancelled',
+                  text: 'The chat is safe.',
+                  icon: 'error',
+                  customClass: {
+                      confirmButton: 'btn btn-success'
+                  }
+              });
+          }
+      });
+  }
+
+  function openModal(messageId) {
+      const messageContent = document.querySelector(`.chat-content[data-message-id='${messageId}'] p`).innerText;
+
+      Swal.fire({
+          title: 'Message Content',
+          text: messageContent,
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'OK',
+          customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-danger ms-1'
+          },
+          buttonsStyling: false
+      }).then(function (result) {
+          if (result.isConfirmed) {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Acknowledged!',
+                  text: 'You have acknowledged the message.',
+                  customClass: {
+                      confirmButton: 'btn btn-success'
+                  }
+              });
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire({
+                  title: 'Cancelled',
+                  text: 'You have cancelled the action.',
+                  icon: 'error',
+                  customClass: {
+                      confirmButton: 'btn btn-success'
+                  }
+              });
+          }
+      });
+  }
+
+  document.querySelectorAll('.chat-users-list li').forEach(chatItem => {
+      chatItem.addEventListener('mousedown', function (event) {
+          longPressTimer = setTimeout(() => handleLongPressForRemoval(event), longPressDuration);
+      });
+
+      chatItem.addEventListener('mouseup', function () {
+          clearTimeout(longPressTimer);
+      });
+
+      chatItem.addEventListener('mouseleave', function () {
+          clearTimeout(longPressTimer);
+      });
+  });
+
+  document.querySelectorAll('.chat-content').forEach(chatContent => {
+      chatContent.addEventListener('mousedown', function () {
+          const messageId = this.getAttribute('data-message-id');
+          longPressTimer = setTimeout(() => {
+              openModal(messageId);
+          }, longPressDuration);
+      });
+
+      chatContent.addEventListener('mouseup', function () {
+          clearTimeout(longPressTimer);
+      });
+
+      chatContent.addEventListener('mouseleave', function () {
+          clearTimeout(longPressTimer);
+      });
+  });
+});

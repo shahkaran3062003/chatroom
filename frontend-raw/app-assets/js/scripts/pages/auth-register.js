@@ -48,6 +48,9 @@ $(function () {
         },
         'register-password': {
           required: true
+        },
+        'register-profile': {
+          required: true
         }
       }
     });

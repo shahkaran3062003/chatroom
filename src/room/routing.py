@@ -1,8 +1,8 @@
-from django.urls import re_path
+from django.urls import path
 
 from .consumers import ChannelConsumer
 
 
 websocket_urlpatterns = [
-    re_path(r"ws/channel/(?P<channel_name>\w+)/$", ChannelConsumer.as_asgi()),
+    path(r"ws/room/<int:room_id>/<int:channel_id>/", ChannelConsumer.as_asgi()),
 ]

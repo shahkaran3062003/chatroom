@@ -10,7 +10,7 @@ class ChannelConsumer(WebsocketConsumer):
         # messages = Messages.get_messages(self)
         # print("Channelll name = "+self.ch_name)
         messages = Channel.objects.filter(
-            name=self.ch_name).first().get_messages()
+            id=self.ch_id).first().get_messages()
 
         content = {
             'command': "message",
@@ -30,6 +30,7 @@ class ChannelConsumer(WebsocketConsumer):
     def message_to_json(self, message):
         return {
             'author': message.user.get_username(),
+            'messageId': str(message.id),
             'content': str(message.content),
             'timeStamp': str(message.timeStamp)
         }
@@ -37,7 +38,7 @@ class ChannelConsumer(WebsocketConsumer):
     def new_message(self, data):
         author = data['from']
         author_user = User.objects.filter(username=author)[0]
-        channel = Channel.objects.filter(name=self.ch_name).first()
+        channel = Channel.objects.filter(id=self.ch_id).first()
 
         message = Messages.objects.create(
             channel=channel,
@@ -66,8 +67,9 @@ class ChannelConsumer(WebsocketConsumer):
     }
 
     def connect(self):
-        self.ch_name = self.scope["url_route"]["kwargs"]["channel_name"]
-        self.ch_group_name = f"chat_{self.ch_name}"
+        self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
+        self.ch_id = self.scope["url_route"]["kwargs"]["channel_id"]
+        self.ch_group_name = f"chat_{self.ch_id}"
         async_to_sync(self.channel_layer.group_add)(
             self.ch_group_name, self.channel_name)
 

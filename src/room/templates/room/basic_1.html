@@ -271,18 +271,30 @@
                         </span>
                     </a>
                 </li>
-                {% block rooms %} {% for room in allRooms %}
+ {% for room in allRooms %}
                 <li class="nav-item me-auto">
                     <a class="navbar-brand btn btn-icon rounded-circle"
-                        style="background-color: #161d31; width: 48px; height: 48px" data-bs-toggle="modal"
-                        data-bs-target="">
+                        style="background-color: #161d31; width: 48px; height: 48px" data-bs-toggle="tooltip"
+                        data-bs-target="" data-bs-placement="right" data-bs-original-title="{{ room.room.name }}">
                         <span class="brand-logo align-items-center" style="font-size: large">
                             <!-- <i data-feather=" plus" style="width: 25px;height: 25px"></i> -->
-                            {{ room.name }}
+                            {{ room.room.name }}
                         </span>
                     </a>
                 </li>
-                {% endfor %} {% endblock %}
+
+                {% comment %} <li class="nav-item me-auto">
+                    <a
+                        class="navbar-brand btn btn-icon rounded-circle"
+                        style="background-color: #161d31;width: 48px;height: 48px"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        data-bs-original-title="Server Name 1"
+                    >
+                        <span class="brand-logo"></span>
+                    </a>
+                </li> {% endcomment %}
+                {% endfor %}
             </ul>
         </div>
     </div>
@@ -337,7 +349,11 @@
                                                             clip-rule="evenodd" class=""></path>
                                                     </svg>
                                                 </div>
-                                                <h6 class="mb-0">{{ channel.name }}</h6>
+                                                {% comment %} <h6 class="mb-0">{{ channel.name }}</h6> {% endcomment %}
+                                                <div class="chat-info flex-grow-1">
+                                                    <h5 class="mb-0">{{ channel.name }}</h5>
+                                                    <span class="timeline-event-time">12 min ago</span>
+                                                </div>
                                             </div>
                                             <!-- <div class="d-flex align-items-center">
                                             <div class="dropdown">
@@ -362,7 +378,8 @@
                                     <div class="user-chats ps {{ channel.name }}">
                                         <div class="chats">
 
-                                            {{ selectedChannel.name|json_script:"channel-name" }}
+                                            {{ selectedroom.id|json_script:"room-id" }}
+                                            {{ selectedChannel.id|json_script:"channel-name" }}
                                             {{ user.username|json_script:"userName" }}
                                         </div>
                                     </div>
@@ -608,6 +625,7 @@
     <div class="drag-target"></div>
     <!-- BEGIN: Vendor JS-->
     <script>
+        const room_id = JSON.parse(document.getElementById("room-id").textContent);
         const channelName = JSON.parse(
             document.getElementById("channel-name").textContent
         );
@@ -631,6 +649,7 @@
     <script src="{% static 'app-assets/js/scripts/components/components-dropdowns.js' %}"></script>
     <script src="{% static 'app-assets/js/scripts/extensions/ext-component-sweet-alerts.js' %}"></script>
     <script src="{% static 'app-assets/js/scripts/pages/modal-edit-channel.js' %}"></script>
+    <script src="{% static 'app-assets/js/scripts/components/components-tooltips.js' %}"> </script>
     <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
     <!-- END: Page JS-->
     <script>
@@ -644,7 +663,7 @@
         });
 
         const chatSocket = new ReconnectingWebSocket(
-            "ws://" + window.location.host + "/ws/channel/" + channelName + "/"
+            "ws://" + window.location.host + "/ws/room/" + room_id + "/" + channelName +"/"
         );
 
         chatSocket.onopen = function (e) {
@@ -673,6 +692,7 @@
             var author = data["author"];
             var chats = $(".chats");
             var lastChild = $(".chat:last-child");
+            var messageId = data['messageId'];
 
             if (lastChild.length != 0) {
                 var len = lastChild[0].classList.length;
@@ -701,7 +721,7 @@
                 }
             }
             var html =
-                '<div class="chat-content">' +
+                `<div class="chat-content" data-message-id="${messageId}" >` +
                 "<p>" +
                 data["content"] +
                 "</p>" +
@@ -717,6 +737,11 @@
         chatSocket.onclose = function (e) {
             console.error("Chat socket closed unexpectedly");
         };
+    </script>
+
+    <script src="{% static 'app-assets/js/scripts/pages/app-chat-handle-longPress.js' %}"></script>
+
+    <script>
     </script>
 </body>
 <!-- END: Body-->

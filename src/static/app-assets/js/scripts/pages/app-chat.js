@@ -281,121 +281,92 @@ $(function () {
     });
   }
 
-  if (speechToText.length) {
-    // Speech To Text
-    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-    if (SpeechRecognition !== undefined && SpeechRecognition !== null) {
-      var recognition = new SpeechRecognition(),
-        listening = false;
-      speechToText.on("click", function () {
-        var $this = $(this);
-        recognition.onspeechstart = function () {
-          listening = true;
-        };
-        if (listening === false) {
-          recognition.start();
+  // Window Resize
+  $(window).on("resize", function () {
+    sidebarToggleFunction();
+    if ($(window).width() > 992) {
+      if ($(".chat-application .body-content-overlay").hasClass("show")) {
+        $(".app-content .sidebar-left").removeClass("show");
+        $(".chat-application .body-content-overlay").removeClass("show");
+      }
+    }
+
+    // Chat sidebar toggle
+    if ($(window).width() < 991) {
+      if (
+        !$(".chat-application .chat-profile-sidebar").hasClass("show") ||
+        !$(".chat-application .sidebar-content").hasClass("show")
+      ) {
+        $(".sidebar-content").removeClass("show");
+        $(".body-content-overlay").removeClass("show");
+      }
+    }
+  });
+
+  // Add message to chat - function call on form submit
+  function enterChat(source) {
+    var message = $(".message").val();
+    if (/\S/.test(message)) {
+      // var html =
+      //   '<div class="chat-content">' + "<p>" + message + "</p>" + "</div>";
+      // $(".chat:last-child .chat-body").append(html);
+      // $(".message").val("");
+      // $(".user-chats").scrollTop($(".user-chats > .chats").height());
+
+      // const messageInputDom = document.querySelector("#chat-message-input");
+      // const message = messageInputDom.value;
+      chatSocket.send(
+        JSON.stringify({
+          message: message,
+          command: "new_message",
+          from: userName,
+        })
+      );
+      // console.log("userName" + userName);
+      // messageInputDom.value = "";
+    }
+  }
+
+  function addChat(data) {
+    var message = data["message"];
+    var author = message["message"].author;
+    var messageId = message["message"].messageId;
+
+    var chats = $(".chats");
+    var lastChild = $(".chat:last-child");
+    if (lastChild.length > 0) {
+      var len = lastChild[0].classList.length;
+      if (userName == author) {
+        if (len == 2) {
+          var html2 =
+            '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+          chats.append(html2);
         }
-        recognition.onerror = function (event) {
-          listening = false;
-        };
-        recognition.onresult = function (event) {
-          $this
-            .closest(".form-send-message")
-            .find(".message")
-            .val(event.results[0][0].transcript);
-        };
-        recognition.onspeechend = function (event) {
-          listening = false;
-          recognition.stop();
-        };
-      });
-    }
-  }
-});
-// Window Resize
-$(window).on("resize", function () {
-  sidebarToggleFunction();
-  if ($(window).width() > 992) {
-    if ($(".chat-application .body-content-overlay").hasClass("show")) {
-      $(".app-content .sidebar-left").removeClass("show");
-      $(".chat-application .body-content-overlay").removeClass("show");
-    }
-  }
-
-  // Chat sidebar toggle
-  if ($(window).width() < 991) {
-    if (
-      !$(".chat-application .chat-profile-sidebar").hasClass("show") ||
-      !$(".chat-application .sidebar-content").hasClass("show")
-    ) {
-      $(".sidebar-content").removeClass("show");
-      $(".body-content-overlay").removeClass("show");
-    }
-  }
-});
-
-// Add message to chat - function call on form submit
-function enterChat(source) {
-  var message = $(".message").val();
-  if (/\S/.test(message)) {
-    // var html =
-    //   '<div class="chat-content">' + "<p>" + message + "</p>" + "</div>";
-    // $(".chat:last-child .chat-body").append(html);
-    // $(".message").val("");
-    // $(".user-chats").scrollTop($(".user-chats > .chats").height());
-
-    // const messageInputDom = document.querySelector("#chat-message-input");
-    // const message = messageInputDom.value;
-    chatSocket.send(
-      JSON.stringify({
-        message: message,
-        command: "new_message",
-        from: userName,
-      })
-    );
-    // console.log("userName" + userName);
-    // messageInputDom.value = "";
-  }
-}
-
-function addChat(data) {
-  var message = data["message"];
-  var author = message["message"].author;
-
-  var chats = $(".chats");
-  var lastChild = $(".chat:last-child");
-  if (lastChild.length > 0) {
-    var len = lastChild[0].classList.length;
-    if (userName == author) {
-      if (len == 2) {
+      } else {
         var html2 =
-          '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+          '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
         chats.append(html2);
       }
     } else {
-      var html2 =
-        '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-      chats.append(html2);
+      if (userName == author) {
+        var html2 =
+          '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+        chats.append(html2);
+      } else {
+        var html2 =
+          '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
+        chats.append(html2);
+      }
     }
-  } else {
-    if (userName == author) {
-      var html2 =
-        '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-      chats.append(html2);
-    } else {
-      var html2 =
-        '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-      chats.append(html2);
-    }
-  }
-  var html =
-    '<div class="chat-content">' +
-    "<p>" +
-    message["message"].content +
-    "</p>" +
-    "</div>";
+    var html =
+      `<div class="chat-content" data-message-id="${messageId}">` +
+      "<p>" +
+      message["message"].content +
+      "</p>" +
+      "</div>";
 
-  $(".chat:last-child .chat-body").append(html);
-  $(".message").val("");
-  $(".user-chats").scrollTop($(".user-chats > .chats").height());
-}
+    $(".chat:last-child .chat-body").append(html);
+    $(".message").val("");
+    $(".user-chats").scrollTop($(".user-chats > .chats").height());
+  }
+});

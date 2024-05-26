@@ -1,37 +1,38 @@
-
-'use strict';
-var sidebarToggle = $('.sidebar-toggle'),
-  overlay = $('.body-content-overlay'),
-  sidebarContent = $('.sidebar-content');
+"use strict";
+var sidebarToggle = $(".sidebar-toggle"),
+  overlay = $(".body-content-overlay"),
+  sidebarContent = $(".sidebar-content");
 
 // Chat sidebar toggle
 function sidebarToggleFunction() {
   if (sidebarToggle.length) {
-    sidebarToggle.on('click', function () {
-      sidebarContent.addClass('show');
-      overlay.addClass('show');
+    sidebarToggle.on("click", function () {
+      sidebarContent.addClass("show");
+      overlay.addClass("show");
     });
   }
 }
 $(function () {
-  var chatUsersListWrapper = $('.chat-application .chat-user-list-wrapper'),
-    mainmenucontent = $('.main-menu-content'),
-    profileSidebar = $('.chat-application .chat-profile-sidebar'),
-    profileSidebarArea = $('.chat-application .profile-sidebar-area'),
-    profileToggle = $('.chat-application .sidebar-profile-toggle'),
-    userProfileToggle = $('.user-profile-toggle'),
-    userProfileSidebar = $('.user-profile-sidebar'),
-    statusRadio = $('.chat-application .user-status input:radio[name=userStatus]'),
-    userChats = $('.user-chats'),
-    chatsUserList = $('.chat-users-list'),
-    navigation = $('.navigation-main'),
-    chatList = $('.chat-list'),
-    contactList = $('.contact-list'),
-    closeIcon = $('.chat-application .close-icon'),
-    sidebarCloseIcon = $('.chat-application .sidebar-close-icon'),
-    menuToggle = $('.chat-application .menu-toggle'),
-    speechToText = $('.speech-to-text'),
-    chatSearch = $('.chat-application #chat-search');
+  var chatUsersListWrapper = $(".chat-application .chat-user-list-wrapper"),
+    mainmenucontent = $(".main-menu-content"),
+    profileSidebar = $(".chat-application .chat-profile-sidebar"),
+    profileSidebarArea = $(".chat-application .profile-sidebar-area"),
+    profileToggle = $(".chat-application .sidebar-profile-toggle"),
+    userProfileToggle = $(".user-profile-toggle"),
+    userProfileSidebar = $(".user-profile-sidebar"),
+    statusRadio = $(
+      ".chat-application .user-status input:radio[name=userStatus]"
+    ),
+    userChats = $(".user-chats"),
+    chatsUserList = $(".chat-users-list"),
+    navigation = $(".navigation-main"),
+    chatList = $(".chat-list"),
+    contactList = $(".contact-list"),
+    closeIcon = $(".chat-application .close-icon"),
+    sidebarCloseIcon = $(".chat-application .sidebar-close-icon"),
+    menuToggle = $(".chat-application .menu-toggle"),
+    speechToText = $(".speech-to-text"),
+    chatSearch = $(".chat-application #chat-search");
 
   // init ps if it is not touch device
   if (!$.app.menu.is_touch_device()) {
@@ -41,14 +42,16 @@ $(function () {
     }
 
     // Admin profile left
-    if (userProfileSidebar.find('.user-profile-sidebar-area').length > 0) {
-      var userScrollArea = new PerfectScrollbar(userProfileSidebar.find('.user-profile-sidebar-area')[0]);
+    if (userProfileSidebar.find(".user-profile-sidebar-area").length > 0) {
+      var userScrollArea = new PerfectScrollbar(
+        userProfileSidebar.find(".user-profile-sidebar-area")[0]
+      );
     }
 
     // Chat area
     if (userChats.length > 0) {
       var chatsUser = new PerfectScrollbar(userChats[0], {
-        wheelPropagation: false
+        wheelPropagation: false,
       });
     }
 
@@ -57,146 +60,148 @@ $(function () {
       var user_profile = new PerfectScrollbar(profileSidebarArea[0]);
     }
   } else {
-    chatUsersListWrapper.css('overflow', 'scroll');
-    userProfileSidebar.find('.user-profile-sidebar-area').css('overflow', 'scroll');
-    userChats.css('overflow', 'scroll');
-    profileSidebarArea.css('overflow', 'scroll');
+    chatUsersListWrapper.css("overflow", "scroll");
+    userProfileSidebar
+      .find(".user-profile-sidebar-area")
+      .css("overflow", "scroll");
+    userChats.css("overflow", "scroll");
+    profileSidebarArea.css("overflow", "scroll");
 
     // on user click sidebar close in touch devices
     $(chatsUserList)
-      .find('li')
-      .on('click', function () {
-        $(sidebarContent).removeClass('show');
-        $(overlay).removeClass('show');
+      .find("li")
+      .on("click", function () {
+        $(sidebarContent).removeClass("show");
+        $(overlay).removeClass("show");
       });
 
-      $(navigation)
-      .find('li')
-      .on('click', function () {
-        $(sidebarContent).removeClass('show');
-        $(overlay).removeClass('show');
+    $(navigation)
+      .find("li")
+      .on("click", function () {
+        $(sidebarContent).removeClass("show");
+        $(overlay).removeClass("show");
       });
   }
 
   // Chat Profile sidebar & overlay toggle
   if (profileToggle.length) {
-    profileToggle.on('click', function () {
-      profileSidebar.addClass('show');
-      overlay.addClass('show');
+    profileToggle.on("click", function () {
+      profileSidebar.addClass("show");
+      overlay.addClass("show");
     });
   }
 
   // Update status by clicking on Radio
   if (statusRadio.length) {
-    statusRadio.on('change', function () {
-      var $className = 'avatar-status-' + this.value,
-        profileHeaderAvatar = $('.header-profile-sidebar .avatar span');
+    statusRadio.on("change", function () {
+      var $className = "avatar-status-" + this.value,
+        profileHeaderAvatar = $(".header-profile-sidebar .avatar span");
       profileHeaderAvatar.removeClass();
-      profileToggle.find('.avatar span').removeClass();
-      profileHeaderAvatar.addClass($className + ' avatar-status-lg');
-      profileToggle.find('.avatar span').addClass($className);
+      profileToggle.find(".avatar span").removeClass();
+      profileHeaderAvatar.addClass($className + " avatar-status-lg");
+      profileToggle.find(".avatar span").addClass($className);
     });
   }
 
   // On Profile close click
   if (closeIcon.length) {
-    closeIcon.on('click', function () {
-      profileSidebar.removeClass('show');
-      userProfileSidebar.removeClass('show');
-      if (!sidebarContent.hasClass('show')) {
-        overlay.removeClass('show');
+    closeIcon.on("click", function () {
+      profileSidebar.removeClass("show");
+      userProfileSidebar.removeClass("show");
+      if (!sidebarContent.hasClass("show")) {
+        overlay.removeClass("show");
       }
     });
   }
 
   // On sidebar close click
   if (sidebarCloseIcon.length) {
-    sidebarCloseIcon.on('click', function () {
-      sidebarContent.removeClass('show');
-      overlay.removeClass('show');
+    sidebarCloseIcon.on("click", function () {
+      sidebarContent.removeClass("show");
+      overlay.removeClass("show");
     });
   }
 
   // User Profile sidebar toggle
   if (userProfileToggle.length) {
-    userProfileToggle.on('click', function () {
-      userProfileSidebar.addClass('show');
-      overlay.addClass('show');
+    userProfileToggle.on("click", function () {
+      userProfileSidebar.addClass("show");
+      overlay.addClass("show");
     });
   }
 
   // On overlay click
   if (overlay.length) {
-    overlay.on('click', function () {
-      sidebarContent.removeClass('show');
-      overlay.removeClass('show');
-      profileSidebar.removeClass('show');
-      userProfileSidebar.removeClass('show');
+    overlay.on("click", function () {
+      sidebarContent.removeClass("show");
+      overlay.removeClass("show");
+      profileSidebar.removeClass("show");
+      userProfileSidebar.removeClass("show");
     });
   }
 
   // Add class active on click of Chat users list
-  if (chatUsersListWrapper.find('ul li').length) {
-    chatUsersListWrapper.find('ul li').on('click', function () {
+  if (chatUsersListWrapper.find("ul li").length) {
+    chatUsersListWrapper.find("ul li").on("click", function () {
       var $this = $(this),
-        startArea = $('.start-chat-area'),
-        activeChat = $('.active-chat');
+        startArea = $(".start-chat-area"),
+        activeChat = $(".active-chat");
 
-      if (chatUsersListWrapper.find('ul li').hasClass('active')) {
-        chatUsersListWrapper.find('ul li').removeClass('active');
+      if (chatUsersListWrapper.find("ul li").hasClass("active")) {
+        chatUsersListWrapper.find("ul li").removeClass("active");
       }
 
-      $this.addClass('active');
-      $this.find('.badge').remove();
+      $this.addClass("active");
+      $this.find(".badge").remove();
 
-      if (chatUsersListWrapper.find('ul li').hasClass('active')) {
-        startArea.addClass('d-none');
-        activeChat.removeClass('d-none');
+      if (chatUsersListWrapper.find("ul li").hasClass("active")) {
+        startArea.addClass("d-none");
+        activeChat.removeClass("d-none");
       } else {
-        startArea.removeClass('d-none');
-        activeChat.addClass('d-none');
+        startArea.removeClass("d-none");
+        activeChat.addClass("d-none");
       }
     });
   }
 
-  if (mainmenucontent.find('ul li').length) {
-    mainmenucontent.find('ul li').on('click', function () {
+  if (mainmenucontent.find("ul li").length) {
+    mainmenucontent.find("ul li").on("click", function () {
       var $this = $(this),
-        startArea = $('.start-chat-area'),
-        activeChat = $('.active-chat');
+        startArea = $(".start-chat-area"),
+        activeChat = $(".active-chat");
 
-      if (mainmenucontent.find('ul li').hasClass('active')) {
-        mainmenucontent.find('ul li').removeClass('active');
+      if (mainmenucontent.find("ul li").hasClass("active")) {
+        mainmenucontent.find("ul li").removeClass("active");
       }
 
-      $this.addClass('active');
-      $this.find('.badge').remove();
+      $this.addClass("active");
+      $this.find(".badge").remove();
 
-      if (mainmenucontent.find('ul li').hasClass('active')) {
-        startArea.addClass('d-none');
-        activeChat.removeClass('d-none');
+      if (mainmenucontent.find("ul li").hasClass("active")) {
+        startArea.addClass("d-none");
+        activeChat.removeClass("d-none");
       } else {
-        startArea.removeClass('d-none');
-        activeChat.addClass('d-none');
+        startArea.removeClass("d-none");
+        activeChat.addClass("d-none");
       }
     });
   }
 
   // auto scroll to bottom of Chat area
-  chatsUserList.find('li').on('click', function () {
+  chatsUserList.find("li").on("click", function () {
     userChats.animate({ scrollTop: userChats[0].scrollHeight }, 400);
   });
-  navigation.find('li').on('click', function () {
+  navigation.find("li").on("click", function () {
     userChats.animate({ scrollTop: userChats[0].scrollHeight }, 400);
   });
 
   // Main menu toggle should hide app menu
   if (menuToggle.length) {
-    menuToggle.on('click', function (e) {
-      sidebarContent.removeClass('show');
-      overlay.removeClass('show');
-      profileSidebar.removeClass('show');
-      userProfileSidebar.removeClass('show');
+    menuToggle.on("click", function (e) {
+      sidebarContent.removeClass("show");
+      overlay.removeClass("show");
+      profileSidebar.removeClass("show");
+      userProfileSidebar.removeClass("show");
     });
   }
 
@@ -206,194 +211,202 @@ $(function () {
 
   // Filter
   if (chatSearch.length) {
-    chatSearch.on('keyup', function () {
+    chatSearch.on("keyup", function () {
       var value = $(this).val().toLowerCase();
-      if (value !== '') {
+      if (value !== "") {
         // filter chat list
-        chatList.find('li:not(.no-results)').filter(function () {
+        chatList.find("li:not(.no-results)").filter(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
         // filter contact list
-        contactList.find('li:not(.no-results)').filter(function () {
+        contactList.find("li:not(.no-results)").filter(function () {
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
-        var chat_tbl_row = chatList.find('li:not(.no-results):visible').length,
-          contact_tbl_row = contactList.find('li:not(.no-results):visible').length;
+        var chat_tbl_row = chatList.find("li:not(.no-results):visible").length,
+          contact_tbl_row = contactList.find(
+            "li:not(.no-results):visible"
+          ).length;
 
         // check if chat row available
         if (chat_tbl_row == 0) {
-          chatList.find('.no-results').addClass('show');
+          chatList.find(".no-results").addClass("show");
         } else {
-          if (chatList.find('.no-results').hasClass('show')) {
-            chatList.find('.no-results').removeClass('show');
+          if (chatList.find(".no-results").hasClass("show")) {
+            chatList.find(".no-results").removeClass("show");
           }
         }
 
         // check if contact row available
         if (contact_tbl_row == 0) {
-          contactList.find('.no-results').addClass('show');
+          contactList.find(".no-results").addClass("show");
         } else {
-          if (contactList.find('.no-results').hasClass('show')) {
-            contactList.find('.no-results').removeClass('show');
+          if (contactList.find(".no-results").hasClass("show")) {
+            contactList.find(".no-results").removeClass("show");
           }
         }
       } else {
         // If filter box is empty
-        chatsUserList.find('li').show();
-        navigation.find('li').show();
+        chatsUserList.find("li").show();
+        navigation.find("li").show();
 
-        if (chatUsersListWrapper.find('.no-results').hasClass('show')) {
-          chatUsersListWrapper.find('.no-results').removeClass('show');
+        if (chatUsersListWrapper.find(".no-results").hasClass("show")) {
+          chatUsersListWrapper.find(".no-results").removeClass("show");
         }
       }
     });
   }
 
-// Window Resize
-$(window).on('resize', function () {
-  sidebarToggleFunction();
-  if ($(window).width() > 992) {
-    if ($('.chat-application .body-content-overlay').hasClass('show')) {
-      $('.app-content .sidebar-left').removeClass('show');
-      $('.chat-application .body-content-overlay').removeClass('show');
+  // Window Resize
+  $(window).on("resize", function () {
+    sidebarToggleFunction();
+    if ($(window).width() > 992) {
+      if ($(".chat-application .body-content-overlay").hasClass("show")) {
+        $(".app-content .sidebar-left").removeClass("show");
+        $(".chat-application .body-content-overlay").removeClass("show");
+      }
     }
-  }
 
-  // Chat sidebar toggle
-  if ($(window).width() < 991) {
-    if (
-      !$('.chat-application .chat-profile-sidebar').hasClass('show') ||
-      !$('.chat-application .sidebar-content').hasClass('show')
-    ) {
-      $('.sidebar-content').removeClass('show');
-      $('.body-content-overlay').removeClass('show');
+    // Chat sidebar toggle
+    if ($(window).width() < 991) {
+      if (
+        !$(".chat-application .chat-profile-sidebar").hasClass("show") ||
+        !$(".chat-application .sidebar-content").hasClass("show")
+      ) {
+        $(".sidebar-content").removeClass("show");
+        $(".body-content-overlay").removeClass("show");
+      }
+    }
+  });
+
+  // Add message to chat - function call on form submit
+  function enterChat(source) {
+    var message = $(".message").val();
+    if (/\S/.test(message)) {
+      var html =
+        '<div class="chat-content">' + "<p>" + message + "</p>" + "</div>";
+      $(".chat:last-child .chat-body").append(html);
+      $(".message").val("");
+      $(".user-chats").scrollTop($(".user-chats > .chats").height());
     }
   }
 });
 
-// Add message to chat - function call on form submit
-function enterChat(source) {
-  var message = $('.message').val();
-  if (/\S/.test(message)) {
-    var html = '<div class="chat-content">' + '<p>' + message + '</p>' + '</div>';
-    $('.chat:last-child .chat-body').append(html);
-    $('.message').val('');
-    $('.user-chats').scrollTop($('.user-chats > .chats').height());
-  }
-}
-});
-
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   let longPressTimer;
-  const longPressDuration = 1000; 
+  const longPressDuration = 1000;
 
   function removeChatItem(chatItem) {
-      chatItem.remove();
+    chatItem.remove();
   }
 
   function handleLongPressForRemoval(event) {
-      const chatItem = event.currentTarget;
+    const chatItem = event.currentTarget;
 
-      Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-outline-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeChatItem(chatItem);
+        Swal.fire({
+          icon: "success",
+          title: "Deleted!",
+          text: "The chat has been removed.",
           customClass: {
-              confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-outline-danger ms-1'
+            confirmButton: "btn btn-success",
           },
-          buttonsStyling: false
-      }).then((result) => {
-          if (result.isConfirmed) {
-              removeChatItem(chatItem);
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Deleted!',
-                  text: 'The chat has been removed.',
-                  customClass: {
-                      confirmButton: 'btn btn-success'
-                  }
-              });
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire({
-                  title: 'Cancelled',
-                  text: 'The chat is safe.',
-                  icon: 'error',
-                  customClass: {
-                      confirmButton: 'btn btn-success'
-                  }
-              });
-          }
-      });
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "The chat is safe.",
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }
+    });
   }
 
   function openModal(messageId) {
-      const messageContent = document.querySelector(`.chat-content[data-message-id='${messageId}'] p`).innerText;
+    const messageContent = document.querySelector(
+      `.chat-content[data-message-id='${messageId}'] p`
+    ).innerText;
 
-      Swal.fire({
-          title: 'Message Content',
-          text: messageContent,
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonText: 'OK',
+    Swal.fire({
+      title: "Message Content",
+      text: messageContent,
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-outline-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          title: "Acknowledged!",
+          text: "You have acknowledged the message.",
           customClass: {
-              confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-outline-danger ms-1'
+            confirmButton: "btn btn-success",
           },
-          buttonsStyling: false
-      }).then(function (result) {
-          if (result.isConfirmed) {
-              Swal.fire({
-                  icon: 'success',
-                  title: 'Acknowledged!',
-                  text: 'You have acknowledged the message.',
-                  customClass: {
-                      confirmButton: 'btn btn-success'
-                  }
-              });
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire({
-                  title: 'Cancelled',
-                  text: 'You have cancelled the action.',
-                  icon: 'error',
-                  customClass: {
-                      confirmButton: 'btn btn-success'
-                  }
-              });
-          }
-      });
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire({
+          title: "Cancelled",
+          text: "You have cancelled the action.",
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }
+    });
   }
 
-  document.querySelectorAll('.chat-users-list li').forEach(chatItem => {
-      chatItem.addEventListener('mousedown', function (event) {
-          longPressTimer = setTimeout(() => handleLongPressForRemoval(event), longPressDuration);
-      });
+  document.querySelectorAll(".chat-users-list li").forEach((chatItem) => {
+    chatItem.addEventListener("mousedown", function (event) {
+      longPressTimer = setTimeout(
+        () => handleLongPressForRemoval(event),
+        longPressDuration
+      );
+    });
 
-      chatItem.addEventListener('mouseup', function () {
-          clearTimeout(longPressTimer);
-      });
+    chatItem.addEventListener("mouseup", function () {
+      clearTimeout(longPressTimer);
+    });
 
-      chatItem.addEventListener('mouseleave', function () {
-          clearTimeout(longPressTimer);
-      });
+    chatItem.addEventListener("mouseleave", function () {
+      clearTimeout(longPressTimer);
+    });
   });
 
-  document.querySelectorAll('.chat-content').forEach(chatContent => {
-      chatContent.addEventListener('mousedown', function () {
-          const messageId = this.getAttribute('data-message-id');
-          longPressTimer = setTimeout(() => {
-              openModal(messageId);
-          }, longPressDuration);
-      });
+  document.querySelectorAll(".chat-content").forEach((chatContent) => {
+    chatContent.addEventListener("mousedown", function () {
+      const messageId = this.getAttribute("data-message-id");
+      longPressTimer = setTimeout(() => {
+        openModal(messageId);
+      }, longPressDuration);
+    });
 
-      chatContent.addEventListener('mouseup', function () {
-          clearTimeout(longPressTimer);
-      });
+    chatContent.addEventListener("mouseup", function () {
+      clearTimeout(longPressTimer);
+    });
 
-      chatContent.addEventListener('mouseleave', function () {
-          clearTimeout(longPressTimer);
-      });
+    chatContent.addEventListener("mouseleave", function () {
+      clearTimeout(longPressTimer);
+    });
   });
 });

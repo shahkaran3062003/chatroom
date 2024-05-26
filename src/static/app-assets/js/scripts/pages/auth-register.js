@@ -8,20 +8,22 @@
 ==========================================================================================*/
 
 $(function () {
-  ('use strict');
+  ("use strict");
 
-  var assetsPath = '../../../app-assets/',
-    registerMultiStepsWizard = document.querySelector('.register-multi-steps-wizard'),
-    pageResetForm = $('.auth-register-form'),
-    select = $('.select2'),
-    creditCard = $('.credit-card-mask'),
-    expiryDateMask = $('.expiry-date-mask'),
-    cvvMask = $('.cvv-code-mask'),
-    mobileNumberMask = $('.mobile-number-mask'),
-    pinCodeMask = $('.pin-code-mask');
+  var assetsPath = "../../../app-assets/",
+    registerMultiStepsWizard = document.querySelector(
+      ".register-multi-steps-wizard"
+    ),
+    pageResetForm = $(".auth-register-form"),
+    select = $(".select2"),
+    creditCard = $(".credit-card-mask"),
+    expiryDateMask = $(".expiry-date-mask"),
+    cvvMask = $(".cvv-code-mask"),
+    mobileNumberMask = $(".mobile-number-mask"),
+    pinCodeMask = $(".pin-code-mask");
 
-  if ($('body').attr('data-framework') === 'laravel') {
-    assetsPath = $('body').attr('data-asset-path');
+  if ($("body").attr("data-framework") === "laravel") {
+    assetsPath = $("body").attr("data-asset-path");
   }
 
   // jQuery Validation
@@ -39,17 +41,17 @@ $(function () {
         $(element).valid();
       }, */
       rules: {
-        'register-username': {
-          required: true
-        },
-        'register-email': {
+        username: {
           required: true,
-          email: true
         },
-        'register-password': {
-          required: true
-        }
-      }
+        email: {
+          required: true,
+          email: true,
+        },
+        password: {
+          required: true,
+        },
+      },
     });
   }
 
@@ -57,57 +59,60 @@ $(function () {
   // --------------------------------------------------------------------
 
   // Horizontal Wizard
-  if (typeof registerMultiStepsWizard !== undefined && registerMultiStepsWizard !== null) {
+  if (
+    typeof registerMultiStepsWizard !== undefined &&
+    registerMultiStepsWizard !== null
+  ) {
     var numberedStepper = new Stepper(registerMultiStepsWizard),
-      $form = $(registerMultiStepsWizard).find('form');
+      $form = $(registerMultiStepsWizard).find("form");
     $form.each(function () {
       var $this = $(this);
       $this.validate({
         rules: {
           username: {
-            required: true
+            required: true,
           },
           email: {
-            required: true
+            required: true,
           },
           password: {
             required: true,
-            minlength: 8
+            minlength: 8,
           },
-          'confirm-password': {
+          "confirm-password": {
             required: true,
             minlength: 8,
-            equalTo: '#password'
+            equalTo: "#password",
           },
-          'first-name': {
-            required: true
+          "first-name": {
+            required: true,
           },
-          'home-address': {
-            required: true
+          "home-address": {
+            required: true,
           },
           addCard: {
-            required: true
-          }
+            required: true,
+          },
         },
         messages: {
           password: {
-            required: 'Enter new password',
-            minlength: 'Enter at least 8 characters'
+            required: "Enter new password",
+            minlength: "Enter at least 8 characters",
           },
-          'confirm-password': {
-            required: 'Please confirm new password',
-            minlength: 'Enter at least 8 characters',
-            equalTo: 'The password and its confirm are not the same'
-          }
-        }
+          "confirm-password": {
+            required: "Please confirm new password",
+            minlength: "Enter at least 8 characters",
+            equalTo: "The password and its confirm are not the same",
+          },
+        },
       });
     });
 
     $(registerMultiStepsWizard)
-      .find('.btn-next')
+      .find(".btn-next")
       .each(function () {
-        $(this).on('click', function (e) {
-          var isValid = $(this).parent().siblings('form').valid();
+        $(this).on("click", function (e) {
+          var isValid = $(this).parent().siblings("form").valid();
           if (isValid) {
             numberedStepper.next();
           } else {
@@ -117,17 +122,17 @@ $(function () {
       });
 
     $(registerMultiStepsWizard)
-      .find('.btn-prev')
-      .on('click', function () {
+      .find(".btn-prev")
+      .on("click", function () {
         numberedStepper.previous();
       });
 
     $(registerMultiStepsWizard)
-      .find('.btn-submit')
-      .on('click', function () {
-        var isValid = $(this).parent().siblings('form').valid();
+      .find(".btn-submit")
+      .on("click", function () {
+        var isValid = $(this).parent().siblings("form").valid();
         if (isValid) {
-          alert('Submitted..!!');
+          alert("Submitted..!!");
         }
       });
   }
@@ -140,8 +145,8 @@ $(function () {
       // the following code is used to disable x-scrollbar when click in select input and
       // take 100% width in responsive also
       dropdownAutoWidth: true,
-      width: '100%',
-      dropdownParent: $this.parent()
+      width: "100%",
+      dropdownParent: $this.parent(),
     });
   });
 
@@ -153,19 +158,23 @@ $(function () {
       new Cleave($(this), {
         creditCard: true,
         onCreditCardTypeChanged: function (type) {
-          const elementNodeList = document.querySelectorAll('.card-type');
-          if (type != '' && type != 'unknown') {
+          const elementNodeList = document.querySelectorAll(".card-type");
+          if (type != "" && type != "unknown") {
             //! we accept this approach for multiple credit card masking
             for (let i = 0; i < elementNodeList.length; i++) {
               elementNodeList[i].innerHTML =
-                '<img src="' + assetsPath + 'images/icons/payments/' + type + '-cc.png" height="24"/>';
+                '<img src="' +
+                assetsPath +
+                "images/icons/payments/" +
+                type +
+                '-cc.png" height="24"/>';
             }
           } else {
             for (let i = 0; i < elementNodeList.length; i++) {
-              elementNodeList[i].innerHTML = '';
+              elementNodeList[i].innerHTML = "";
             }
           }
-        }
+        },
       });
     });
   }
@@ -174,8 +183,8 @@ $(function () {
   if (expiryDateMask.length) {
     new Cleave(expiryDateMask, {
       date: true,
-      delimiter: '/',
-      datePattern: ['m', 'y']
+      delimiter: "/",
+      datePattern: ["m", "y"],
     });
   }
 
@@ -183,7 +192,7 @@ $(function () {
   if (cvvMask.length) {
     new Cleave(cvvMask, {
       numeral: true,
-      numeralPositiveOnly: true
+      numeralPositiveOnly: true,
     });
   }
 
@@ -191,15 +200,15 @@ $(function () {
   if (mobileNumberMask.length) {
     new Cleave(mobileNumberMask, {
       phone: true,
-      phoneRegionCode: 'US'
+      phoneRegionCode: "US",
     });
   }
 
   // Pincode
   if (pinCodeMask.length) {
     new Cleave(pinCodeMask, {
-      delimiter: '',
-      numeral: true
+      delimiter: "",
+      numeral: true,
     });
   }
 

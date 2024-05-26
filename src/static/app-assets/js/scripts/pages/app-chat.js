@@ -33,7 +33,6 @@ $(function () {
     closeIcon = $(".chat-application .close-icon"),
     sidebarCloseIcon = $(".chat-application .sidebar-close-icon"),
     menuToggle = $(".chat-application .menu-toggle"),
-    speechToText = $(".speech-to-text"),
     chatSearch = $(".chat-application #chat-search");
 
   // init ps if it is not touch device
@@ -174,7 +173,6 @@ $(function () {
         startArea.addClass("d-none");
         activeChat.removeClass("d-none");
         activeChat.addClass(channelId);
-        console.log("karanfjslkad");
       } else {
         startArea.removeClass("d-none");
         activeChat.addClass("d-none");
@@ -182,35 +180,33 @@ $(function () {
     });
   }
 
-  if (mainmenucontent.find("ul li").length) {
-    console.log("karn");
-    mainmenucontent.find("ul li").on("click", function () {
-      var $this = $(this),
-        temp = mainmenucontent.find("ul li"),
-        startArea = $(".start-chat-area"),
-        channelId = $(this).attr("id"),
-        allActiveChat = $(".active-chat"),
-        activeChat = $(`.active-chat.${channelId}`);
+  // if (mainmenucontent.find("ul li").length) {
+  //   mainmenucontent.find("ul li").on("click", function () {
+  //     var $this = $(this),
+  //       temp = mainmenucontent.find("ul li"),
+  //       startArea = $(".start-chat-area"),
+  //       channelId = $(this).attr("id"),
+  //       allActiveChat = $(".active-chat"),
+  //       activeChat = $(`.active-chat.${channelId}`);
 
-      if (mainmenucontent.find("ul li").hasClass("active")) {
-        console.log("karn");
-        mainmenucontent.find("ul li").removeClass("active");
-      }
+  //     if (mainmenucontent.find("ul li").hasClass("active")) {
+  //       mainmenucontent.find("ul li").removeClass("active");
+  //     }
 
-      $this.addClass("active");
-      $this.find(".badge").remove();
+  //     $this.addClass("active");
+  //     $this.find(".badge").remove();
 
-      if (mainmenucontent.find("ul li").hasClass("active")) {
-        startArea.addClass("d-none");
-        allActiveChat.addClass("d-none");
-        activeChat.removeClass("d-none");
-        activeChat.addClass(chId);
-      } else {
-        startArea.removeClass("d-none");
-        activeChat.addClass("d-none");
-      }
-    });
-  }
+  //     if (mainmenucontent.find("ul li").hasClass("active")) {
+  //       startArea.addClass("d-none");
+  //       allActiveChat.addClass("d-none");
+  //       activeChat.removeClass("d-none");
+  //       activeChat.addClass(chId);
+  //     } else {
+  //       startArea.removeClass("d-none");
+  //       activeChat.addClass("d-none");
+  //     }
+  //   });
+  // }
 
   // auto scroll to bottom of Chat area
   chatsUserList.find("li").on("click", function () {
@@ -304,69 +300,94 @@ $(function () {
   });
 
   // Add message to chat - function call on form submit
-  function enterChat(source) {
-    var message = $(".message").val();
-    if (/\S/.test(message)) {
-      // var html =
-      //   '<div class="chat-content">' + "<p>" + message + "</p>" + "</div>";
-      // $(".chat:last-child .chat-body").append(html);
-      // $(".message").val("");
-      // $(".user-chats").scrollTop($(".user-chats > .chats").height());
-
-      // const messageInputDom = document.querySelector("#chat-message-input");
-      // const message = messageInputDom.value;
-      chatSocket.send(
-        JSON.stringify({
-          message: message,
-          command: "new_message",
-          from: userName,
-        })
-      );
-      // console.log("userName" + userName);
-      // messageInputDom.value = "";
-    }
-  }
-
-  function addChat(data) {
-    var message = data["message"];
-    var author = message["message"].author;
-    var messageId = message["message"].messageId;
-
-    var chats = $(".chats");
-    var lastChild = $(".chat:last-child");
-    if (lastChild.length > 0) {
-      var len = lastChild[0].classList.length;
-      if (userName == author) {
-        if (len == 2) {
-          var html2 =
-            '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-          chats.append(html2);
-        }
-      } else {
-        var html2 =
-          '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-        chats.append(html2);
-      }
-    } else {
-      if (userName == author) {
-        var html2 =
-          '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-        chats.append(html2);
-      } else {
-        var html2 =
-          '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-        chats.append(html2);
-      }
-    }
-    var html =
-      `<div class="chat-content" data-message-id="${messageId}">` +
-      "<p>" +
-      message["message"].content +
-      "</p>" +
-      "</div>";
-
-    $(".chat:last-child .chat-body").append(html);
-    $(".message").val("");
-    $(".user-chats").scrollTop($(".user-chats > .chats").height());
-  }
 });
+
+function enterChat(source) {
+  var message = $(".message").val();
+  if (/\S/.test(message)) {
+    chatSocket.send(
+      JSON.stringify({
+        message: message,
+        command: "new_message",
+        from: userName,
+      })
+    );
+  }
+}
+
+function addChat(data) {
+  // var message = data["message"];
+  var author = data["author"];
+  var messageId = data["messageId"];
+  var timeStamp = data["timeStamp"];
+  var date = new Date(timeStamp);
+
+  var print_date = `${date.getHours()}:${date.getMinutes()}, ${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+
+  var chats = $(".chats");
+  var lastChild = $(".chat:last-child");
+  var lastAuthor = $(".chats .chat").last().data("author");
+  console.log(lastChild);
+  if (lastChild.length != 0) {
+    if (lastAuthor != author) {
+      if (userName == author) {
+        var html2 =
+          '<div class="chat" data-author=' +
+          author +
+          ' ><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"><div class="float-end" style="margin-right:1rem">@' +
+          author +
+          "</div></div></div>";
+        chats.append(html2);
+      } else {
+        var html2 =
+          '<div class="chat chat-left" data-author=' +
+          author +
+          ' ><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"><div class="float-start" style="margin-left:1rem">@' +
+          author +
+          "</div></div></div>";
+
+        chats.append(html2);
+      }
+    }
+  } else {
+    if (userName == author) {
+      var html2 =
+        '<div class="chat" data-author=' +
+        author +
+        ' ><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"><div class="float-end" style="margin-right:1rem">@' +
+        author +
+        "</div></div></div>";
+      chats.append(html2);
+    } else {
+      var html2 =
+        '<div class="chat chat-left" data-author=' +
+        author +
+        ' ><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"><div class="float-start" style="margin-left:1rem">@' +
+        author +
+        "</div></div></div>";
+
+      chats.append(html2);
+    }
+  }
+  if (userName != author) {
+    var html =
+      `<div class="chat-content ${author}" data-message-id="${messageId}" >` +
+      "<p>" +
+      data["content"] +
+      "</p>" +
+      `<small class="float-start chat-time">${print_date}</small>` +
+      "</div>";
+  } else {
+    var html =
+      `<div class="chat-content ${author}" data-message-id="${messageId}" >` +
+      "<p>" +
+      data["content"] +
+      "</p>" +
+      `<small class="float-end chat-time"> ${print_date} </small>` +
+      "</div>";
+  }
+
+  $(".chat:last-child .chat-body").append(html);
+  $(".message").val("");
+  $(".user-chats").scrollTop($(".user-chats > .chats").height());
+}

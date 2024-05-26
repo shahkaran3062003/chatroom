@@ -41,6 +41,9 @@
 
 <body class="vertical-layout vertical-menu-modern content-left-sidebar navbar-floating footer-static" data-open="click"
     data-menu="vertical-menu-modern" data-col="content-left-sidebar">
+    {{ selectedroom.id|json_script:"room-id" }}
+    {{ selectedChannel.id|json_script:"channel-name" }}
+    {{ user.username|json_script:"userName" }}
     <!-- BEGIN: Header-->
     <nav
         class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-dark navbar-shadow container-xxl">
@@ -86,24 +89,28 @@
                 <li class="nav-item me-25">
                     <a class="nav-link user-profile-toggle" href="#">
                         <i class="ficon" data-feather="users"></i>
-                        <span class="badge rounded-pill bg-primary badge-up cart-item-count">6</span>
+                        <span class="badge rounded-pill bg-primary badge-up cart-item-count">
+
+
+                            {{ participants|dict_key:selectedChannel|length|default_if_none:'-'}}
+
+
+                        </span>
                     </a>
                 </li>
 
                 <li class="nav-item dropdown dropdown-user">
-                    {% block userInfo %}
                     <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="user-nav d-sm-flex d-none">
                             <span class="user-name fw-bolder"> {{ user.username }} </span>
                         </div>
                         <span class="avatar">
-                            <img class="round" src="{% static 'app-assets/images/portrait/small/avatar-s-11.jpg' %}"
-                                alt="avatar" height="40" width="40" />
+                            <img class="round" src="{{ user.userprofile.avatar.url }}" alt="avatar" height="40"
+                                width="40" />
                             <span class="avatar-status-online"></span>
                         </span>
                     </a>
-                    {% endblock %}
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
                         <a class="dropdown-item" href="#">
@@ -111,7 +118,7 @@
                             Profile
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{% url 'home:logout' %}">
                             <i class="me-50" data-feather="power"></i>
                             Logout
                         </a>
@@ -129,6 +136,8 @@
                 <li class="nav-item me-auto">
                     <a class="navbar-brand" href="#">
                         <span class="brand-logo">
+
+
                             <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                                 <defs>
@@ -174,7 +183,7 @@
         <div class="shadow-bottom"></div>
 
         <div class="main-menu-content">
-            {% if channel.owner == user %}
+            {% if selectedroom.owner == user %}
             <ul>
                 <a class="d-flex align-items-center btn btn-icon" data-bs-toggle="modal" data-bs-target="#addchannel"
                     style="
@@ -188,32 +197,60 @@
             </ul>
             {% endif %}
             <hr />
+            <ul>
+                <a class="d-flex align-items-center btn btn-icon" data-bs-toggle="modal" data-bs-target="#copyLink"
+                    style="
+              background-color: #161d31;
+              margin: 0 15px;
+              padding: 10px 10px 10px 10px;
+            " href="#">
+                    <i data-feather="plus" viewBox="0 0 24 30"></i>
+                    <span class="menu-item text-truncate" data-i18n="AddNewChannel">Share</span>
+                </a>
+            </ul>
+            <hr />
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                {% block channels %} {% for channel in channels %}
+                {% for channel in channels %}
 
-                <li class="nav-item" id="{{ channel.name }}">
-                    <a class="d-flex align-items-center" href="localhost:8000/channel/{{channelName}}">
-                        <svg class="icon__67ab4" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="24" fill="none" viewBox="0 0 24 24">
-                            <path fill="currentColor" fill-rule="evenodd"
-                                d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                clip-rule="evenodd" class=""></path>
-                        </svg>
-                        <span class="menu-title text-truncate" data-i18n="Common Channel">
-                            {{ channel.name }}
-                        </span>
+
+                <!-- <li class="nav-item channel active open" id="{{ channel.name }}" data-channel-id="{{ channel.id }}"> -->
+                {% if channel == selectedChannel %}
+
+                {% if channel.owner != user or channel.name == "Common" %}
+                <li class="nav-item active" id="{{ channel.name }}">
+                    {% else %}
+                <li class="nav-item active open" id="{{ channel.name }}">
+                    {% endif %}
+
+                    {% else %}
+                <li class="nav-item" id="{{ channel.name }}"">
+                    {% endif %}
+                    <a class=" d-flex align-items-center channel" href="#" data-channel-id="{{ channel.id }}">
+                    <svg class="icon__67ab4" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="20"
+                        height="24" fill="none" viewBox="0 0 24 24">
+                        <path fill="currentColor" fill-rule="evenodd"
+                            d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
+                            clip-rule="evenodd" class=""></path>
+                    </svg>
+                    <span class="menu-title text-truncate" data-i18n="Common Channel">
+                        {{ channel.name }}
+                    </span>
                     </a>
 
-                    {% if channel.owner == user %}
+                    {% if channel.owner == user and channel.name != "Common" %}
+
+
                     <ul class="menu-content">
                         <li>
-                            <a class="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#editchannel">
+                            <a class="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#editchannel"
+                                href="#">
                                 <i data-feather="edit" viewBox="0 0 24 30"></i>
                                 <span class="menu-item text-truncate" data-i18n="Edit">Edit</span>
                             </a>
                         </li>
                         <li>
-                            <a class="d-flex align-items-center" id="confirm-color">
+                            <a class="d-flex align-items-center dltChannel" id="confirm-color"
+                                data-ch-id="{{ channel.id }}">
                                 <i data-feather="trash-2" viewBox="0 0 24 30"></i>
                                 <span class="menu-item text-truncate" data-i18n="Delete">Delete</span>
                             </a>
@@ -224,35 +261,6 @@
 
                 {% endfor %}
 
-                <!-- <li class="nav-item" id="{{channelName}}">
-                    <a class="d-flex align-items-center" href="localhost:8000/channel/{{channelName}}">
-                        <svg class="icon__67ab4" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg"
-                            width="20" height="24" fill="none" viewBox="0 0 24 24">
-                            <path fill="currentColor" fill-rule="evenodd"
-                                d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                clip-rule="evenodd" class=""></path>
-                        </svg>
-                        <span class="menu-title text-truncate" data-i18n="Common Channel"> {{ channelName }}
-
-                        </span>
-                    </a>
-                    <ul class="menu-content">
-                        <li>
-                            <a class="d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#editchannel">
-                                <i data-feather="edit" viewBox="0 0 24 30"></i>
-                                <span class="menu-item text-truncate" data-i18n="Edit">Edit</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="d-flex align-items-center" id="confirm-color">
-                                <i data-feather="trash-2" viewBox="0 0 24 30"></i>
-                                <span class="menu-item text-truncate" data-i18n="Delete">Delete</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li> -->
-
-                {% endblock %}
             </ul>
         </div>
     </div>
@@ -271,26 +279,24 @@
                         </span>
                     </a>
                 </li>
- {% for room in allRooms %}
-                <li class="nav-item me-auto">
-                    <a class="navbar-brand btn btn-icon rounded-circle"
-                        style="background-color: #161d31; width: 48px; height: 48px" data-bs-toggle="tooltip"
-                        data-bs-target="" data-bs-placement="right" data-bs-original-title="{{ room.room.name }}">
-                        <span class="brand-logo align-items-center" style="font-size: large">
+                {% for room in allRooms %}
+                <li class="nav-item me-auto room" data-room-id="{{ room.room.id }}">
+                    <a class="navbar-brand btn rounded-circle"
+                        style="background-color: #161d31; width: 48px; height: 48px;justify-content: center;"
+                        data-bs-toggle="tooltip" data-bs-target=""
+                        data-bs-original-title="{{ room.room.name }}, owner {{ room.room.owner.username }}">
+                        <span class="brand-logo align-items-center"
+                            style="font-size: large;align-items: center;text-align: center;">
                             <!-- <i data-feather=" plus" style="width: 25px;height: 25px"></i> -->
-                            {{ room.room.name }}
+                            {{ room.room.name.0 }}
                         </span>
                     </a>
                 </li>
 
                 {% comment %} <li class="nav-item me-auto">
-                    <a
-                        class="navbar-brand btn btn-icon rounded-circle"
-                        style="background-color: #161d31;width: 48px;height: 48px"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="right"
-                        data-bs-original-title="Server Name 1"
-                    >
+                    <a class="navbar-brand btn btn-icon rounded-circle"
+                        style="background-color: #161d31;width: 48px;height: 48px" data-bs-toggle="tooltip"
+                        data-bs-placement="right" data-bs-original-title="Server Name 1">
                         <span class="brand-logo"></span>
                     </a>
                 </li> {% endcomment %}
@@ -310,32 +316,12 @@
                     <div class="content-body">
                         <div class="body-content-overlay"></div>
                         <section class="chat-app-window">
-                            <!-- To load Conversation -->
-                            <!-- <div class="start-chat-area">
-                                <div class="mb-1 start-chat-icon">
-                                    <i data-feather="message-square" href="#"></i>
-                                </div>
-                                <h4 class="sidebar-toggle start-chat-text">
-                                    Start Conversation
-                                </h4>
-                            </div> -->
-                            <!-- / To load Conversation -->
-                            <!-- Main chat area -->
-                            <!-- Active Chat -->
-
                             {% for channel in channels %}
-
-
                             {% if channel == selectedChannel %}
-                            <div class="active-chat {{ channel.name }}">
-
+                            <div class="active-chat active {{ channel.name }}">
                                 {% else %}
                                 <div class="active-chat d-none {{ channel.name }}">
                                     {% endif %}
-
-
-                                    <!-- <div class="active-chat active"> -->
-
                                     <!-- Chat Header -->
                                     <div class="chat-navbar">
                                         <header class="chat-header">
@@ -349,28 +335,9 @@
                                                             clip-rule="evenodd" class=""></path>
                                                     </svg>
                                                 </div>
-                                                {% comment %} <h6 class="mb-0">{{ channel.name }}</h6> {% endcomment %}
-                                                <div class="chat-info flex-grow-1">
-                                                    <h5 class="mb-0">{{ channel.name }}</h5>
-                                                    <span class="timeline-event-time">12 min ago</span>
-                                                </div>
+                                                <h6 class="mb-0">{{ channel.name }}</h6>
+
                                             </div>
-                                            <!-- <div class="d-flex align-items-center">
-                                            <div class="dropdown">
-                                                <button
-                                                    class="btn-icon btn btn-transparent hide-arrow btn-sm dropdown-toggle"
-                                                    type="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    <i data-feather="more-vertical" id="chat-header-actions"
-                                                        class="font-medium-2"></i>
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-end"
-                                                    aria-labelledby="chat-header-actions">
-                                                    <a class="dropdown-item" href="#">Mute Notifications</a>
-                                                    <a class="dropdown-item" href="#">Clear Chat</a>
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         </header>
                                     </div>
                                     <!--/ Chat Header -->
@@ -378,9 +345,8 @@
                                     <div class="user-chats ps {{ channel.name }}">
                                         <div class="chats">
 
-                                            {{ selectedroom.id|json_script:"room-id" }}
-                                            {{ selectedChannel.id|json_script:"channel-name" }}
-                                            {{ user.username|json_script:"userName" }}
+
+
                                         </div>
                                     </div>
                                     <!-- User Chat messages -->
@@ -438,15 +404,19 @@
                                                                 {% with participant as ps %}
                                                                 {% for p in ps %}
 
-                                                                
                                                                 {% if p.user != user %}
-                                                                    
-                                                                
-                                                                    
-                                                                <li>
+                                                                <li class="channel-member-list"
+                                                                    data-user-id="{{p.user.id}}"
+                                                                    data-channel-id="{{selectedChannel.id}}">
                                                                     <span class="avatar">
-                                                                        <!-- <img src="app-assets/images/portrait/small/avatar-s-7.jpg"
-                                                                        height="42" width="42" alt="Generic placeholder image"> -->
+                                                                        <img src="{{ p.user.userprofile.avatar.url }}"
+                                                                            height="42" width="42"
+                                                                            alt="Generic placeholder image">
+                                                                        {% if p.user.userprofile.isActive %}
+                                                                        <span class="avatar-status-online"></span>
+                                                                        {% else %}
+                                                                        <span class="avatar-status-offline"></span>
+                                                                        {% endif %}
                                                                     </span>
                                                                     <div class="chat-info">
                                                                         <h5 class="mb-0">
@@ -500,11 +470,16 @@
                                 <div class="text-center mb-2">
                                     <h1 class="mb-1">Add Channel Information</h1>
                                 </div>
-                                <form id="addchannelForm" class="row gy-1 pt-75" onsubmit="false">
+                                <form id="addchannelForm" class="row gy-1 pt-75" onsubmit="true" method="post"
+                                    name="addChannel">
+                                    {% csrf_token %}
                                     <div class="col-12">
                                         <label class="form-label" for="modalEditChannelName">Channel Name</label>
+                                        <input type="text" name="type" hidden value="addChannel" />
                                         <input type="text" id="modalEditChannelName" name="channelname"
                                             class="form-control" placeholder="Common, Game, Study" />
+
+                                        <input type="text" hidden value="{{ selectedroom.id }}" name="roomId" />
                                     </div>
                                     <div class="col-12 text-center mt-2 pt-50">
                                         <button type="submit" class="btn btn-primary me-1">
@@ -521,6 +496,39 @@
                     </div>
                 </div>
 
+
+                <div class="modal fade" id="copyLink" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-md modal-dialog-centered modal-edit-user">
+                        <div class="modal-content">
+                            <div class="modal-header bg-transparent">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body pb-5 px-sm-5 pt-50">
+                                <div class="text-center mb-2">
+                                    <h1 class="mb-1">Share this link</h1>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label" for="modalEditChannelName">link</label>
+                                    <input type="text" id="roomLink" class="form-control" placeholder="" disabled
+                                        value="http://127.0.0.1:8000/join/{{ selectedroom.id }}/" />
+                                </div>
+                                <div class="col-12 text-center mt-2 pt-50">
+                                    <button type="" class="btn btn-primary me-1" id="copyButton" onclick="copyText()">
+                                        Copy
+                                    </button>
+                                    <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        Discard
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal fade" id="editchannel" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-md modal-dialog-centered modal-edit-user">
                         <div class="modal-content">
@@ -532,11 +540,16 @@
                                 <div class="text-center mb-2">
                                     <h1 class="mb-1">Edit Channel Information</h1>
                                 </div>
-                                <form id="editchannelForm" class="row gy-1 pt-75" onsubmit="false">
+                                <form id="addchannelForm" class="row gy-1 pt-75" onsubmit="true" method="post"
+                                    name="addChannel">
+                                    {% csrf_token %}
                                     <div class="col-12">
                                         <label class="form-label" for="modalEditChannelName">Channel Name</label>
+                                        <input type="text" name="type" hidden value="editChannel" />
                                         <input type="text" id="modalEditChannelName" name="channelname"
-                                            class="form-control" placeholder="Common, Game, Study" />
+                                            class="form-control" placeholder="Common, Game, Study"
+                                            value="{{ selectedChannel.name }}" />
+                                        <input type="text" hidden value="{{ selectedChannel.id }}" name="channelId" />
                                     </div>
                                     <div class="col-12 text-center mt-2 pt-50">
                                         <button type="submit" class="btn btn-primary me-1">
@@ -564,9 +577,11 @@
                                 <div class="text-center mb-2">
                                     <h1 class="mb-1">Edit Room Information</h1>
                                 </div>
-                                <form id="editroomform" class="row gy-1 pt-75" onsubmit="false">
+                                <form id="editroomform" class="row gy-1 pt-75" onsubmit="true">
                                     <div class="col-12">
+                                        {% csrf_token %}
                                         <label class="form-label" for="modalEditChannelName">Room Name</label>
+                                        <input type="text" name="type" hidden value="editroom" />
                                         <input type="text" id="modalEditChannelName" name="roomname"
                                             class="form-control" placeholder="School, College, Party" />
                                     </div>
@@ -596,8 +611,12 @@
                                 <div class="text-center mb-2">
                                     <h1 class="mb-1">Add Room Information</h1>
                                 </div>
-                                <form id="addroomform" class="row gy-1 pt-75" onsubmit="false">
+                                <form id="addroomform" class="row gy-1 pt-75" onsubmit="true" method="post"
+                                    name="addroom">
+                                    {% csrf_token %}
+
                                     <div class="col-12">
+                                        <input type="text" name="type" hidden value="addroom" />
                                         <label class="form-label" for="modalEditChannelName">Room Name</label>
                                         <input type="text" id="modalEditChannelName" name="roomname"
                                             class="form-control" placeholder="School, College, Party" />
@@ -620,6 +639,7 @@
             </div>
         </div>
     </div>
+
     <!-- END: Content-->
     <div class="sidenav-overlay"></div>
     <div class="drag-target"></div>
@@ -662,8 +682,9 @@
             }
         });
 
+
         const chatSocket = new ReconnectingWebSocket(
-            "ws://" + window.location.host + "/ws/room/" + room_id + "/" + channelName +"/"
+            "ws://" + window.location.host + "/ws/room/" + room_id + "/" + channelName + "/"
         );
 
         chatSocket.onopen = function (e) {
@@ -676,11 +697,13 @@
             const command = message["command"];
 
             if (command === "message") {
-                for (let i = message["messages"].length - 1; i >= 0; i--) {
-                    createMessage(message["messages"][i]);
+                for (let i = 0; i <= message["messages"].length; i++) {
+                    // createMessage(message["messages"][i]);
+                    addChat(message["messages"][i]);
                 }
             } else if (command === "new_message") {
-                addChat(data, userName);
+                console.log(message);
+                addChat(message["message"]);
             }
         };
 
@@ -688,55 +711,261 @@
             chatSocket.send(JSON.stringify({ command: "fetch_message" }));
         }
 
-        function createMessage(data) {
-            var author = data["author"];
-            var chats = $(".chats");
-            var lastChild = $(".chat:last-child");
-            var messageId = data['messageId'];
-
-            if (lastChild.length != 0) {
-                var len = lastChild[0].classList.length;
-                if (userName == author) {
-                    if (len == 2) {
-                        var html2 =
-                            '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-                        chats.append(html2);
-                    }
-                } else {
-                    if (len == 1) {
-                        var html2 =
-                            '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-                        chats.append(html2);
-                    }
-                }
-            } else {
-                if (userName == author) {
-                    var html2 =
-                        '<div class="chat"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-                    chats.append(html2);
-                } else {
-                    var html2 =
-                        '<div class="chat chat-left"><div class="chat-avatar"><svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="36"height="36  " fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd"d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"clip-rule="evenodd" class=""></path></svg></div><div class="chat-body"></div></div>';
-                    chats.append(html2);
-                }
-            }
-            var html =
-                `<div class="chat-content" data-message-id="${messageId}" >` +
-                "<p>" +
-                data["content"] +
-                "</p>" +
-                "</div>";
-
-            $(".chat:last-child .chat-body").append(html);
-            $(".message").val("");
-            $(`.user-chats.${channelId}`).scrollTop(
-                $(".user-chats > .chats").height()
-            );
-        }
 
         chatSocket.onclose = function (e) {
             console.error("Chat socket closed unexpectedly");
         };
+
+        function copyText() {
+            var text = document.querySelector("#roomLink").value
+            var copyButton = document.querySelector("#copyButton")
+            navigator.clipboard.writeText(text);
+            copyButton.innerText = "Copied!!!"
+        }
+
+
+        $(document).ready(function () {
+
+            $(".room").click(function () {
+                var roomId = $(this).data("room-id");
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        'type': 'room',
+                        'room_id': roomId,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        console.log(room_id, channelName)
+                        location.reload();
+                        console.log("Room updated successfully");
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log("Error occurred while updating room");
+                    }
+                })
+            });
+
+            $(".channel").click(function () {
+                var channel_id = $(this).data("channel-id");
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        'type': 'channel',
+                        'room_id': room_id,
+                        'channel_id': channel_id,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function (data) {
+                        console.log(room_id, channelName)
+                        location.reload();
+                        console.log("Channel updated successfully");
+                    },
+                    error: function (xhr, errmsg, err) {
+                        console.log("Error occurred while updating channel");
+                    }
+                });
+            });
+
+            if ($(".dltChannel").length > 0) {
+                $(".dltChannel").on("click", function () {
+                    var chId = $(this).data("ch-id");
+                    console.log(chId);
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary",
+                            cancelButton: "btn btn-outline-danger ms-1",
+                        },
+                        buttonsStyling: false,
+                    }).then(function (result) {
+                        if (result.value) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                customClass: {
+                                    confirmButton: "btn btn-success",
+                                },
+                            });
+                            $.ajax({
+                                type: "POST",
+                                data: {
+                                    type: "deleteChannel",
+                                    channel_id: chId,
+                                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                                },
+                                success: function (data) {
+                                    console.log(room_id, channelName);
+                                    location.reload();
+                                    console.log("Room updated successfully");
+                                },
+                                error: function (xhr, errmsg, err) {
+                                    console.log("Error occurred while updating room");
+                                },
+                            });
+                        }
+                    });
+                });
+            }
+
+            let longPressTimer;
+            const longPressDuration = 1000;
+
+
+
+            function openModal(messageId) {
+                const messageContent = document.querySelector(
+                    `.chat-content[data-message-id='${messageId}'] p`
+                ).innerText;
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-outline-danger ms-1",
+                    },
+                    buttonsStyling: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Deleted!",
+                            text: "The chat has been removed.",
+                            customClass: {
+                                confirmButton: "btn btn-success",
+                            },
+                        });
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                type: "deleteMessage",
+                                messageId: messageId,
+                                csrfmiddlewaretoken: "{{ csrf_token }}",
+                            },
+                            success: function (data) {
+                                location.reload();
+                            },
+                            error: function (xhr, errmsg, err) {
+                                console.log("Error occurred while updating room");
+                            },
+                        });
+                    }
+                });
+            }
+
+
+            document
+                .querySelector(".chats")
+                .addEventListener("mousedown", function (event) {
+                    const chatContent = event.target.closest(`.chat-content.${userName}`);
+                    if (chatContent) {
+                        const messageId = chatContent.getAttribute("data-message-id");
+                        longPressTimer = setTimeout(() => {
+                            openModal(messageId);
+                        }, longPressDuration);
+                    }
+                });
+
+            document
+                .querySelector(".chats")
+                .addEventListener("mouseup", function (event) {
+                    const chatContent = event.target.closest(`.chat-content.${userName}`);
+                    if (chatContent) {
+                        clearTimeout(longPressTimer);
+                    }
+                });
+
+            document
+                .querySelector(".chats")
+                .addEventListener("mouseleave", function (event) {
+                    const chatContent = event.target.closest(`.chat-content.${userName}`);
+                    if (chatContent) {
+                        clearTimeout(longPressTimer);
+                    }
+                });
+
+
+            function handleLongPressForRemoval(event, userId, channelId) {
+                const username = document.querySelector(
+                    `.channel-member-list[data-user-id='${userId}'] h5`
+                ).innerText;
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: `You want to remove ${username}?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-outline-danger ms-1",
+                    },
+                    buttonsStyling: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Deleted!",
+                            text: `${username} Removed from the channel.`,
+                            customClass: {
+                                confirmButton: "btn btn-success",
+                            },
+                        });
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                type: "removeUser",
+                                userId: userId,
+                                channel_id: channelId,
+                                csrfmiddlewaretoken: "{{ csrf_token }}",
+                            },
+                            success: function (data) {
+                                location.reload();
+                            },
+                            error: function (xhr, errmsg, err) {
+                                console.log("Error occurred while updating room");
+                            },
+                        });
+                    }
+                });
+            }
+
+            // Event delegation for chat items
+            document
+                .querySelector(".chat-users-list")
+                .addEventListener("mousedown", function (event) {
+                    const userProfile = event.target.closest("li");
+                    if (userProfile) {
+                        const userId = userProfile.getAttribute("data-user-id");
+                        const channelId = userProfile.getAttribute("data-channel-id");
+                        console.log(userId, channelId);
+                        longPressTimer = setTimeout(
+                            () => handleLongPressForRemoval(event, userId, channelId),
+                            longPressDuration
+                        );
+                    }
+                });
+
+            chatItem.addEventListener("mouseup", function () {
+                clearTimeout(longPressTimer);
+            });
+
+            chatItem.addEventListener("mouseleave", function () {
+                clearTimeout(longPressTimer);
+            });
+        });
+
+
     </script>
 
     <script src="{% static 'app-assets/js/scripts/pages/app-chat-handle-longPress.js' %}"></script>

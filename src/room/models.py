@@ -2,8 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='images/')
+    isActive = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username}"
+
+
 class Room(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
     owner = models.ForeignKey(
         User, related_name='owned_rooms', on_delete=models.CASCADE)
     participants = models.ManyToManyField(
@@ -11,7 +21,7 @@ class Room(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}-{self.id}"
 
 
 class Channel(models.Model):
@@ -21,14 +31,14 @@ class Channel(models.Model):
     owner = models.ForeignKey(
         User, related_name='owned_channels', on_delete=models.CASCADE)
     participants = models.ManyToManyField(
-        User, related_name='channels', through='ChannelParticipant')
+        User, related_name='participants', through='ChannelParticipant')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
     def get_messages(self):
-        return self.messages.order_by('-timeStamp')
+        return self.messages.order_by('timeStamp')
 
 
 class RoomParticipant(models.Model):

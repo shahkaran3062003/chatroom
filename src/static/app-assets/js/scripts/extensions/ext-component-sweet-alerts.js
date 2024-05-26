@@ -37,7 +37,7 @@ $(function () {
   var ajax = $("#ajax-request");
 
   var confirmText = $("#confirm-text");
-  var confirmColor = $("#confirm-color");
+  var confirmColor = $(".dltChannel");
 
   var wrongData = $("#wrong-data");
 
@@ -359,6 +359,7 @@ $(function () {
   if (autoClose.length) {
     autoClose.on("click", function () {
       var timerInterval;
+
       Swal.fire({
         title: "Auto close alert!",
         html: "I will close in <b></b> milliseconds.",
@@ -518,40 +519,4 @@ $(function () {
   }
 
   // Confirm Color
-  if (confirmColor.length > 0) {
-    confirmColor.on("click", function () {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        customClass: {
-          confirmButton: "btn btn-primary",
-          cancelButton: "btn btn-outline-danger ms-1",
-        },
-        buttonsStyling: false,
-      }).then(function (result) {
-        if (result.value) {
-          Swal.fire({
-            icon: "success",
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            customClass: {
-              confirmButton: "btn btn-success",
-            },
-          });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          Swal.fire({
-            title: "Cancelled",
-            text: "Your imaginary file is safe :)",
-            icon: "error",
-            customClass: {
-              confirmButton: "btn btn-success",
-            },
-          });
-        }
-      });
-    });
-  }
 });

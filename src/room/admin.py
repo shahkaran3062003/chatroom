@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, Channel, ChannelParticipant, RoomParticipant, Messages
+from .models import Room, Channel, ChannelParticipant, RoomParticipant, Messages, UserProfile
 
 
 # admin.site.register(Room)
@@ -38,3 +38,4 @@ admin.site.register(Channel, ChannelAdmin)
 admin.site.register(RoomParticipant)
 admin.site.register(ChannelParticipant)
 admin.site.register(Messages, MessageAdmin)
+admin.site.register(UserProfile)

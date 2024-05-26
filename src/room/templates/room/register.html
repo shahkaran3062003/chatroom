@@ -88,18 +88,26 @@
                                 </a>
                                 <h4 class="card-title mb-1">Adventure starts here 🚀</h4>
                                 <p class="card-text mb-2">Make your app management easy and fun!</p>
-                                <form class="auth-register-form mt-2" method="POST">
+                                <form class="auth-register-form mt-2" method="POST" enctype="multipart/form-data">
                                     {% csrf_token %}
+                                    <div class="mb-1">
+                                        <img class="form-control" id="imgView" name="imgView"
+                                            src="{% static 'img/userProfile.jpg' %}" />
+                                        <label for="register-profile" class="form-label">Profile Photo</label>
+                                        <input type="file" class="form-control" id="profile" name="profile"
+                                            placeholder="johndoe" aria-describedby="register-username" tabindex="1"
+                                            autofocus required>
+                                    </div>
                                     <div class="mb-1">
                                         <label for="register-username" class="form-label">Username</label>
                                         <input type="text" class="form-control" id="register-username" name="username"
                                             placeholder="Username" aria-describedby="register-username" tabindex="1"
-                                            autofocus>
+                                            autofocus required>
                                     </div>
                                     <div class="mb-1">
                                         <label for="register-email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="register-email" name="email"
-                                            placeholder="Email" aria-describedby="register-email" tabindex="2">
+                                            placeholder="Email" aria-describedby="register-email" tabindex="2" required>
                                     </div>
                                     <div class="mb-1">
                                         <label for="register-password" class="form-label">Password</label>
@@ -107,7 +115,7 @@
                                             <input type="password" class="form-control form-control-merge"
                                                 id="register-password" name="password"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                                aria-describedby="register-password" tabindex="3">
+                                                aria-describedby="register-password" tabindex="3" required>
                                             <span class="input-group-text cursor-pointer">
                                                 <i data-feather="eye"></i>
                                             </span>
@@ -123,7 +131,9 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary w-100" tabindex="5" type="submit">Sign up</button>
+                                    <!-- <button class="btn btn-primary w-100" tabindex="5" type="submit">Sign up</button> -->
+                                    <input type="submit" class="btn btn-primary w-100" tabindex="5" name="Sign-up"
+                                        value="Sign up" />
                                 </form>
                                 <p class="text-center mt-2">
                                     <span>Already have an account?</span>
@@ -149,7 +159,7 @@
     <script src="{% static 'app-assets/vendors/js/vendors.min.js' %}"></script>
     <!-- BEGIN Vendor JS-->
     <!-- BEGIN: Page Vendor JS-->
-    <script src="{% static 'app-assets/vendors/js/forms/validation/jquery.validate.min.js' %}"></script>
+    <!-- <script src="{% static 'app-assets/vendors/js/forms/validation/jquery.validate.min.js' %}"></script> -->
     <script src="{% static 'app-assets/vendors/js/extensions/sweetalert2.all.min.js' %}"></script>
     <!-- END: Page Vendor JS-->
     <!-- BEGIN: Theme JS-->
@@ -157,7 +167,7 @@
     <script src="{% static 'app-assets/js/core/app.js' %}"></script>
     <!-- END: Theme JS-->
     <!-- BEGIN: Page JS-->
-    <script src="{% static 'app-assets/js/scripts/pages/auth-register.js' %}"></script>
+    <!-- <script src="{% static 'app-assets/js/scripts/pages/auth-register.js' %}"></script> -->
     <!-- END: Page JS-->
 
     <script>
@@ -178,6 +188,35 @@
                 },
             });
         }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgView').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#profile").change(function () {
+            var fileExtentions = ['jpeg', 'jpg', 'png'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtentions) == -1) {
+                Swal.fire({
+                    title: "Invalid Image File.",
+                    text: "",
+                    icon: "error",
+                    customClass: {
+                        confirmButton: "btn btn-success",
+                    },
+                });
+                $(this).val("");
+
+            }
+            readURL(this);
+        })
 
     </script>
     <script>

@@ -1,7 +1,7 @@
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from .models import Messages, User, Channel
+from .models import Messages, User, Channel, UserProfile
 
 
 class ChannelConsumer(WebsocketConsumer):
@@ -17,7 +17,7 @@ class ChannelConsumer(WebsocketConsumer):
             'messages': self.messages_to_json(messages)
         }
 
-        self.send_chat_message(content)
+        self.send_fetch_message(content, self.channel_name)
 
     def messages_to_json(self, messages):
         result = []
@@ -66,6 +66,14 @@ class ChannelConsumer(WebsocketConsumer):
         'send_message': send_chat_message
     }
 
+    def send_fetch_message(self, message, channel_name):
+        async_to_sync(self.channel_layer.send)(
+            channel_name, {
+                "type": "chat_message",
+                "message": message
+            }
+        )
+
     def connect(self):
         self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.ch_id = self.scope["url_route"]["kwargs"]["channel_id"]
@@ -75,9 +83,15 @@ class ChannelConsumer(WebsocketConsumer):
 
         self.accept()
 
+        self.user = self.scope['user']
+        UserProfile.objects.filter(user=self.user).update(isActive=True)
+
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(
             self.ch_group_name, self.channel_name)
+
+        UserProfile.objects.filter(
+            user=self.scope['user']).update(isActive=False)
 
     def receive(self, text_data):
         data = json.loads(text_data)

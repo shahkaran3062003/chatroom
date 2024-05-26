@@ -28,7 +28,13 @@ def index(request):
                 user=request.user, room=new_room)
             new_room_part.save()
 
-            channel = Channel.objects.create()
+            channel = Channel.objects.create(
+                name="Common", room=new_room, owner=request.user)
+            channel.save()
+
+            channel_part = ChannelParticipant.objects.create(
+                user=request.user, channel=channel)
+            channel_part.save()
 
             print("new room added")
             return redirect("/")

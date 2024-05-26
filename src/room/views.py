@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
 from room.models import RoomParticipant, ChannelParticipant, Messages, Room, Channel, UserProfile
+import base64
 
 
 @login_required
@@ -139,9 +140,27 @@ def index(request):
     return render(request, "room/basic_1.html", context=context)
 
 
+SECRET_KEY = 'KaranShah'
+
+
+def decodeUrl(encodedId, secret):
+    decode_str = base64.b64decode(encodedId).decode('utf-8')
+    actual_id, provided_secret = decode_str.rsplit('.', 1)
+    if provided_secret != secret:
+        raise ValueError("Invaid Id")
+    return base64.b64decode(actual_id).decode('utf-8')
+
+
 @login_required
 def join_room(request, room_id):
     # room = Room.objects.get(room_id)
+    print(room_id)
+    try:
+        room_id = decodeUrl(room_id, SECRET_KEY)
+        print(room_id)
+    except ValueError as e:
+        return redirect('/')
+
     room = Room.objects.get(id=room_id)
     allChanells = Channel.objects.filter(room=room)
     user = request.user

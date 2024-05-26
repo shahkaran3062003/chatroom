@@ -203,7 +203,7 @@
               background-color: #161d31;
               margin: 0 15px;
               padding: 10px 10px 10px 10px;
-            " href="#">
+            " href="#" onclick="setEncodedUrl()">
                     <i data-feather="plus" viewBox="0 0 24 30"></i>
                     <span class="menu-item text-truncate" data-i18n="AddNewChannel">Share</span>
                 </a>
@@ -508,6 +508,24 @@
                                 <div class="text-center mb-2">
                                     <h1 class="mb-1">Share this link</h1>
                                 </div>
+
+                                <script>
+
+                                    function encodeId(str, secret) {
+                                        const encodedStr = btoa(str);
+                                        return btoa(`${encodedStr}.${secret}`);
+                                    }
+
+                                    function setEncodedUrl() {
+                                        const s = 'KaranShah'
+                                        const roomId = encodeId(room_id, s);
+                                        const url = 'http://127.0.0.1:8000/join/' + roomId + "/"
+
+                                        let urlLink = document.querySelector("#roomLink")
+                                        urlLink.value = url;
+                                    }
+
+                                </script>
 
                                 <div class="col-12">
                                     <label class="form-label" for="modalEditChannelName">link</label>

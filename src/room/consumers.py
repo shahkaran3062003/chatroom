@@ -54,6 +54,7 @@ class ChannelConsumer(WebsocketConsumer):
         return self.send_chat_message(content)
 
     def send_chat_message(self, message):
+        # print(f"Message Send : {message}")
         async_to_sync(self.channel_layer.group_send)(
             self.ch_group_name, {
                 "type": "chat.message",
@@ -75,6 +76,7 @@ class ChannelConsumer(WebsocketConsumer):
         )
 
     def connect(self):
+
         self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.ch_id = self.scope["url_route"]["kwargs"]["channel_id"]
         self.ch_group_name = f"chat_{self.ch_id}"
@@ -82,6 +84,8 @@ class ChannelConsumer(WebsocketConsumer):
             self.ch_group_name, self.channel_name)
 
         self.accept()
+
+        # print(f"Connect to Channel : {self.ch_id}")
 
         self.user = self.scope['user']
         UserProfile.objects.filter(user=self.user).update(isActive=True)

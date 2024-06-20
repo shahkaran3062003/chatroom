@@ -319,135 +319,147 @@
                             {% for channel in channels %}
                             {% if channel == selectedChannel %}
                             <div class="active-chat active {{ channel.name }}">
-                                {% else %}
-                                <div class="active-chat d-none {{ channel.name }}">
-                                    {% endif %}
-                                    <!-- Chat Header -->
-                                    <div class="chat-navbar">
-                                        <header class="chat-header">
-                                            <div class="d-flex align-items-center">
-                                                <div class="avatar-border m-0 me-1">
-                                                    <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
-                                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                        fill="none" viewBox="0 0 24 24">
-                                                        <path fill="currentColor" fill-rule="evenodd"
-                                                            d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
-                                                            clip-rule="evenodd" class=""></path>
-                                                    </svg>
-                                                </div>
-                                                <h6 class="mb-0">{{ channel.name }}</h6>
 
+                                <!-- Chat Header -->
+                                <div class="chat-navbar">
+                                    <header class="chat-header">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-border m-0 me-1">
+                                                <svg x="0" y="0" class="icon_ae0b42" aria-hidden="true" role="img"
+                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    fill="none" viewBox="0 0 24 24">
+                                                    <path fill="currentColor" fill-rule="evenodd"
+                                                        d="M10.99 3.16A1 1 0 1 0 9 2.84L8.15 8H4a1 1 0 0 0 0 2h3.82l-.67 4H3a1 1 0 1 0 0 2h3.82l-.8 4.84a1 1 0 0 0 1.97.32L8.85 16h4.97l-.8 4.84a1 1 0 0 0 1.97.32l.86-5.16H20a1 1 0 1 0 0-2h-3.82l.67-4H21a1 1 0 1 0 0-2h-3.82l.8-4.84a1 1 0 1 0-1.97-.32L15.15 8h-4.97l.8-4.84ZM14.15 14l.67-4H9.85l-.67 4h4.97Z"
+                                                        clip-rule="evenodd" class=""></path>
+                                                </svg>
                                             </div>
-                                        </header>
-                                    </div>
-                                    <!--/ Chat Header -->
-                                    <!-- User Chat messages -->
-                                    <div class="user-chats ps {{ channel.name }}">
-                                        <div class="chats">
-
-
+                                            <h6 class="mb-0">{{ channel.name }}</h6>
 
                                         </div>
+                                    </header>
+                                </div>
+                                <!--/ Chat Header -->
+                                <!-- User Chat messages -->
+                                <div class="user-chats ps {{ channel.name }}">
+                                    <div class="chats">
+
+
+
                                     </div>
-                                    <!-- User Chat messages -->
-                                    <!-- Submit Chat form -->
-                                    <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
-                                        <div class="input-group input-group-merge me-1 form-send-message">
-                                            <input type="text" class="form-control message"
-                                                placeholder="Type your message " />
-                                        </div>
-                                        <button type="button" class="btn btn-primary send" onclick="enterChat();">
-                                            <i data-feather="send" class="d-lg-none"></i>
-                                            <span class="d-none d-lg-block">Send</span>
-                                        </button>
-                                    </form>
-                                    <div class="user-profile-sidebar {{channelName}}">
-                                        <header class="user-profile-header">
-                                            <span class="close-icon">
-                                                <i data-feather="x"></i>
-                                            </span>
-                                            <!-- User Profile image with name -->
-                                            <div class="header-profile-sidebar">
-                                                <div class="chat-fixed-search">
-                                                    <div class="d-flex align-items-center w-100">
-                                                        <div class="input-group input-group-merge ms-1 w-100">
-                                                            <span class="input-group-text round">
-                                                                <i data-feather="search" class="text-muted"></i>
-                                                            </span>
-                                                            <input type="text" class="form-control round"
-                                                                id="chat-search" placeholder="Search"
-                                                                aria-label="Search..." aria-describedby="chat-search" />
-                                                        </div>
+                                </div>
+                                <!-- User Chat messages -->
+                                <!-- Submit Chat form -->
+                                <form class="chat-app-form" action="javascript:void(0);" onsubmit="enterChat();">
+                                    <div class="input-group input-group-merge me-1 form-send-message">
+                                        <input type="text" class="form-control message"
+                                            placeholder="Type your message " />
+                                    </div>
+                                    <button type="button" class="btn btn-primary send" onclick="enterChat();">
+                                        <i data-feather="send" class="d-lg-none"></i>
+                                        <span class="d-none d-lg-block">Send</span>
+                                    </button>
+                                </form>
+                                <div class="user-profile-sidebar {{channelName}}">
+                                    <header class="user-profile-header">
+                                        <span class="close-icon">
+                                            <i data-feather="x"></i>
+                                        </span>
+                                        <!-- User Profile image with name -->
+                                        <div class="header-profile-sidebar">
+                                            <div class="chat-fixed-search">
+                                                <div class="d-flex align-items-center w-100">
+                                                    <div class="input-group input-group-merge ms-1 w-100">
+                                                        <span class="input-group-text round">
+                                                            <i data-feather="search" class="text-muted"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control round" id="chat-search"
+                                                            placeholder="Search" aria-label="Search..."
+                                                            aria-describedby="chat-search" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- / User Profile image with name -->
-                                        </header>
-                                        <div class="user-profile-sidebar-area">
-                                            <div class="sidebar-left">
-                                                <div class="sidebar">
-                                                    <!-- Chat Sidebar area -->
-                                                    <div class="sidebar-content">
-                                                        <span class="sidebar-close-icon">
-                                                            <i data-feather="x"></i>
-                                                        </span>
-                                                        <!-- Sidebar Users start -->
-                                                        <div id="users-list" class="chat-user-list-wrapper list-group">
-                                                            <h4 class="chat-list-title">Members</h4>
-                                                            <ul class="chat-users-list contact-list media-list">
+                                        </div>
+                                        <!-- / User Profile image with name -->
+                                    </header>
+                                    <div class="user-profile-sidebar-area">
+                                        <div class="sidebar-left">
+                                            <div class="sidebar">
+                                                <!-- Chat Sidebar area -->
+                                                <div class="sidebar-content">
+                                                    <span class="sidebar-close-icon">
+                                                        <i data-feather="x"></i>
+                                                    </span>
+                                                    <!-- Sidebar Users start -->
+                                                    <div id="users-list" class="chat-user-list-wrapper list-group">
+                                                        <h4 class="chat-list-title">Members</h4>
+                                                        <ul class="chat-users-list contact-list media-list">
 
-                                                                {% with channel as ch %}
+                                                            {% with channel as ch %}
 
-                                                                {% for Pchannel, participant in participants.items %}
+                                                            {% for Pchannel, participant in participants.items %}
 
-                                                                {% if Pchannel == ch %}
-                                                                {% with participant as ps %}
-                                                                {% for p in ps %}
+                                                            {% if Pchannel == ch %}
+                                                            {% with participant as ps %}
+                                                            {% for p in ps %}
 
-                                                                {% if p.user != user %}
-                                                                <li class="channel-member-list"
-                                                                    data-user-id="{{p.user.id}}"
-                                                                    data-channel-id="{{selectedChannel.id}}">
-                                                                    <span class="avatar">
-                                                                        <img src="{{ p.user.userprofile.avatar.url }}"
-                                                                            height="42" width="42"
-                                                                            alt="Generic placeholder image">
-                                                                        {% if p.user.userprofile.isActive %}
-                                                                        <span class="avatar-status-online"></span>
+                                                            {% if user == Pchannel.owner and p.user != user %}
+                                                            <li class="channel-member-list member-list"
+                                                                data-user-id="{{p.user.id}}"
+                                                                data-channel-id="{{selectedChannel.id}}">
+                                                                {% else %}
+                                                            <li class="channel-member-list" data-user-id="{{p.user.id}}"
+                                                                data-channel-id="{{selectedChannel.id}}">
+
+                                                                {% endif %}
+
+                                                                <span class="avatar">
+                                                                    <img src="{{ p.user.userprofile.avatar.url }}"
+                                                                        height="42" width="42"
+                                                                        alt="Generic placeholder image">
+                                                                    {% if p.user.userprofile.isActive %}
+                                                                    <span class="avatar-status-online"></span>
+                                                                    {% else %}
+                                                                    <span class="avatar-status-offline"></span>
+                                                                    {% endif %}
+                                                                </span>
+                                                                <div class="chat-info">
+                                                                    <h5 class="mb-0">
+
+                                                                        {% if user == p.user %}
+                                                                        Me
                                                                         {% else %}
-                                                                        <span class="avatar-status-offline"></span>
+                                                                        {{ p.user.username }}
                                                                         {% endif %}
-                                                                    </span>
-                                                                    <div class="chat-info">
-                                                                        <h5 class="mb-0">
-                                                                            {{ p.user.username }}
-                                                                        </h5>
-                                                                        <!-- <p class="card-text text-truncate">
+
+                                                                    </h5>
+                                                                    <!-- <p class="card-text text-truncate">
                                                                         Tart dragée carrot cake chocolate bar. Chocolate
                                                                         cake
                                                                         jelly beans caramels tootsie roll candy canes.
                                                                     </p> -->
-                                                                    </div>
-                                                                </li>
-                                                                {% endif %}
-                                                                {% endfor %}
-                                                                {% endwith %}
-                                                                {% endif %}
-                                                                {% endfor %}
-                                                                {% endwith %}
-                                                            </ul>
-                                                        </div>
-                                                        <!-- Sidebar Users end -->
+                                                                </div>
+                                                            </li>
+                                                            {% comment %} {% endif %} {% endcomment %}
+                                                            {% endfor %}
+                                                            {% endwith %}
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                            {% endwith %}
+                                                        </ul>
                                                     </div>
-                                                    <!--/ Chat Sidebar area -->
+                                                    <!-- Sidebar Users end -->
                                                 </div>
+                                                <!--/ Chat Sidebar area -->
                                             </div>
                                         </div>
                                     </div>
-                                    <!--/ Submit Chat form -->
                                 </div>
+                                <!--/ Submit Chat form -->
+                            </div>
 
-                                {% endfor %}
+                            {% endif %}
+
+                            {% endfor %}
 
                         </section>
 
@@ -915,7 +927,7 @@
 
             function handleLongPressForRemoval(event, userId, channelId) {
                 const username = document.querySelector(
-                    `.channel-member-list[data-user-id='${userId}'] h5`
+                    `.member-list[data-user-id='${userId}'] h5`
                 ).innerText;
 
                 Swal.fire({
@@ -960,7 +972,7 @@
 
             // Event delegation for chat items
             document
-                .querySelector(".chat-users-list")
+                .querySelector(".member-list")
                 .addEventListener("mousedown", function (event) {
                     const userProfile = event.target.closest("li");
                     if (userProfile) {

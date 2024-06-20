@@ -35,7 +35,7 @@ class Channel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.id}"
 
     def get_messages(self):
         return self.messages.order_by('timeStamp')
@@ -62,7 +62,7 @@ class ChannelParticipant(models.Model):
         unique_together = ('user', 'channel')
 
     def __str__(self):
-        return f"{self.channel.name} - {self.user.username}"
+        return f"{self.channel.name} - {self.user.username} - {self.channel.id}"
 
 
 class Messages(models.Model):
